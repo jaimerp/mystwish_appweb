@@ -1,0 +1,58 @@
+{
+    "next": "Siguiente",
+    "login": "Iniciar sesión",
+    "register": "Crear cuenta",
+    "continue": "Continuar",
+
+    "msg.form.error": "Error en el formulario",
+    "msg.form.field.required": "Campo obligatorio",
+    "msg.form.registerok": "Se ha creado la cuenta correctamente",
+
+    "language.title": "Language",
+    "intro1.title": "Your secrets los convertimos en oportunidades",
+    "intro1.subtitle": "Nos encargamos de guardar tus secretos más profundos y conseguir convertirlos en oportunidades.",
+
+    "intro2.title": "Garantizamos máxima confidencialidad",
+    "intro2.subtitle": "Jamás nadie sabrá a quién le has dado like. Únicamente lo sabrá esa persona, pero solo si esa persona te da like a ti.",
+
+    "intro3.title": "Nadie sabrá que estás dado de alta en la plataforma",
+    "intro3.subtitle": "Guardaremos tu confidencialidad siempre. Únicamnte se enterará que estás en la plataforma la persona con la que hayas hecho match",
+
+    "register.title": "Crear una cuenta",
+    "register.gender.choose": "Selecciona tu género",
+    "register.gender.man": "Hombre",
+    "register.gender.woman": "Mujer",
+    "register.gender.neutral": "Género Neutral",
+    "register.phone.title": "Tu número de teléfono",
+    "register.phone": "Teléfono",
+    "register.phone.sending": "Enviando código",
+    "register.phonecode.title": "Introduce el código",
+    "register.phonecode.subtitle": "Introduce el código que te hemos enviado al número ",
+    "register.phonecode.resend": "Reenviar código",
+    "register.phonecode.resend.msg": "Código reenviado a tu móvil",
+    "register.phonecode.error": "El código no es correcto",
+    "register.phonecode.ok": "Teléfono validado",
+    "register.phonecode.checking": "Comprobando el código",
+    "register.laststep.title": "Registro de datos",
+    "register.email": "Correo electrónico",
+    "register.name": "Nombre",
+    "register.password": "Contraseña",
+    "register.password.confirm": "Confirmar contraseña",
+    "register.policy": "Acepto las condiciones generales y aviso legal",
+    "register.registering": "Creando cuenta",
+
+    "register.msg.error.missdata": "Faltan datos para continuar",
+    "register.msg.error.general": "Error general, inténtalo más tarde o ponte en contacto con nosotros",
+    "register.msg.error.form.email": "Email incorrecto",
+    "register.msg.error.form.email.unique": "Este email ya existe",
+    "register.msg.error.form.pass": "Contraseña incorrecta. Debe tener al menos una mayúscula, una minúscula, un número y mínimo 8 caracteres.",
+    "register.msg.error.form.pass_confirm": "La confirmación de la contraseña no coincide",
+
+    "register.subtitle": "Regístrate en ",
+    "register.tologin": "¿Ya tienes cuenta?",
+
+    "already.account": "¿Ya tienes cuenta?",
+
+
+    "o": "o"
+}

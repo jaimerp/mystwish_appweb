@@ -1,0 +1,6 @@
+{
+  "appId": "com.matchly.app",
+  "appName": "Matchly",
+  "webDir": "public",
+  "bundledWebRuntime": false
+}
