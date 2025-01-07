@@ -13,7 +13,7 @@ setLocalData('intro', true);
 const { locale } = useI18n();
 const router = useRouter();
 const APP_NAME = process.env.VUE_APP_NAME;
-const step = ref(4);
+const step = ref(1);
 const sendingPhoneCode = ref(false);
 const checkingPhoneCode = ref(false);
 const registering = ref(false);
@@ -148,7 +148,7 @@ const save = () => {
   <ion-page>
     <ion-content class="ion-padding" v-bind="$attrs">
       <div v-if="step == 1">
-        <div class="ion-text-center" style="margin-top: 0px;">
+        <div class="ion-text-center" style="margin-top: 150px;">
           <ion-text class="s26">{{ $t('register.gender.choose') }}</ion-text>
         </div>
 
@@ -192,7 +192,7 @@ const save = () => {
       </div>
 
       <div v-if="step == 4">
-        <div class="ion-text-center" style="margin-top: 70px;">
+        <div class="ion-text-center" style="margin-top: 0px;">
           <ion-text class="s26">{{ $t('register.laststep.title') }}</ion-text>
         </div>
 
