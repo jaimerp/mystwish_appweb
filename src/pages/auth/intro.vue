@@ -87,7 +87,7 @@ const toRegister = () => {
               <div style="height: 8px;width: 8px;border-radius: 10px;background-color: #DAE0E8;margin-left: 5px;"></div>
             </div>
 
-            <ion-button @click="swiperRef?.$el?.swiper?.slideNext()" expand="block" style="margin-top: 20px;">{{ $t('register') }}</ion-button>
+            <ion-button @click="swiperRef?.$el?.swiper?.slideNext()" expand="block" style="margin-top: 20px;">{{ $t('next') }}</ion-button>
 
           </div>
         </swiper-slide>
