@@ -231,12 +231,12 @@ const confirmButtons = [
               <ion-icon @click="viewSecretModal=false" icon="close-outline" style="font-size: 24px; color: var(--ion-color-primary);" />
           </div>
 
-          <div class="ion-text-center" style="margin-top: 0px;padding-bottom:20px;">
+          <div class="ion-text-center" style="margin-top: 5px;padding-bottom:20px;">
               <ion-text class="m19">{{ secretToView == null ? $t('secrets.title.new') : $t('secrets.title.edit') }}</ion-text>
           </div>
 
           <div class="scrollable-content">
-            <div class="input" style="margin-top: 35px;padding-bottom:13px;"> 
+            <div class="input" style="margin-top: 0px;padding-bottom:13px;"> 
               <ion-input style="flex:1;" v-model="secretData.name"
                 :label="$t('secrets.field.name')"
                 label-placement="floating"

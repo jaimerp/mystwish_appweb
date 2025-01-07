@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import { ref, onMounted, watch, nextTick } from 'vue';
+import { ref, onMounted, watch, nextTick, computed } from 'vue';
 import { getLocalData, setLocalData } from '@/utils/localdata';
 import { useI18n } from 'vue-i18n';
 import axios from '@/plugins/axios.js';
@@ -24,12 +24,14 @@ const userData = ref({
   password: process.env.VUE_APP_PASS_DEV,
   rememberme: false
 });
-console.log(process.env.VUE_APP_EMAIL_DEV)
+
+const loginWith = computed(() => userData.value.loginWith);
+
 onMounted(() => {
   toPhoneInput();
-  watch(userData.value.loginWith, async (newValue) => {
+  watch(loginWith, async (newValue) => {
     if (newValue === 'phone') {
-      toPhoneInput();
+      await toPhoneInput();
     }
   });
 });
@@ -82,7 +84,7 @@ const login = () => {
   <ion-page>
     <ion-content class="ion-padding" v-bind="$attrs">
       <div>
-        <div class="ion-text-center" style="margin-top: 150px;">
+        <div class="ion-text-center" style="margin-top: 110px;">
           <ion-text class="s26">{{ $t('login.title') }}</ion-text>
         </div>
 
@@ -115,10 +117,9 @@ const login = () => {
         </div>
         <ion-text class="r12 txt_error" v-if="emailPhoneError != ''">{{ $t(emailPhoneError) }}</ion-text>
 
-        <div class="input" style="margin-top: 35px;padding-bottom:8px;"> 
+        <div class="input" style="margin-top: 35px;"> 
           <ion-input type="password" style="flex:1;" v-model="userData.password" @keydown="passError = ''"
             :label="$t('password')"
-            label-placement="floating"
           >
             <ion-input-password-toggle slot="end"></ion-input-password-toggle>
           </ion-input>

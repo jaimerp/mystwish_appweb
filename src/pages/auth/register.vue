@@ -148,7 +148,7 @@ const save = () => {
   <ion-page>
     <ion-content class="ion-padding" v-bind="$attrs">
       <div v-if="step == 1">
-        <div class="ion-text-center" style="margin-top: 150px;">
+        <div class="ion-text-center" style="margin-top: 90px;">
           <ion-text class="s26">{{ $t('register.gender.choose') }}</ion-text>
         </div>
 
