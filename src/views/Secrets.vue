@@ -312,7 +312,7 @@ const confirmButtons = [
                   />
               </div>
 
-              <div style="margin-top: 35px;display:flex;margin-bottom:80px;"> 
+              <div style="margin-top: 35px;display:flex;margin-bottom:100px;"> 
                   <ion-button shape="round" class="button-secondary button-delete" style="margin-right:10px" @click="confirmVisible=!confirmVisible" v-if="secretToView != null">
                     <ion-icon slot="icon-only" icon="trash-outline" style="margin:10px;"></ion-icon>
                   </ion-button>
