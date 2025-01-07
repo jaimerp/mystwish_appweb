@@ -254,14 +254,13 @@ const save = () => {
           <ion-text class="r15" >{{ $t('register.registered.subtitle') }}</ion-text>
         </div>
       </div>
-    </ion-content>
-
-    <ion-footer :translucent="false" style="box-shadow: none; background-color: var(--ion-color-bg);">
       <div class="list" style="justify-content: center; margin-top: 40px; margin-bottom: 20px;" v-if="step < 5">
         <ion-text class="r13" style="color: var(--ion-color-dis);">{{ $t('already.account') }}</ion-text>
         <ion-text routerLink="/auth/login" class="m13" style="color: var(--ion-color-primary); margin-left: 5px;">{{ $t('login') }}</ion-text>
       </div>
-      
+    </ion-content>
+
+    <ion-footer :translucent="false" style="box-shadow: none; background-color: var(--ion-color-bg);">      
       <ion-toolbar color="bg" style="padding: 10px 15px;--border-width: 0 0;">
         <div class="ion-toolbar">
           <ion-button shape="round" class="button-previous button-secondary" @click="step--" v-if="step > 1 && step < 4">

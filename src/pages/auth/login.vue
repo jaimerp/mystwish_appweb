@@ -133,16 +133,16 @@ const login = () => {
 
         <ion-text routerLink="/register" class="m13" style="display:block;text-align:center;margin-top:40px; color: var(--ion-color-primary); margin-left: 5px;">{{ $t('login.forgot_password') }}</ion-text>
 
+        <div class="list" style="justify-content: center; margin-top: 40px; margin-bottom: 20px;">
+          <ion-text class="r13" style="color: var(--ion-color-primary);">{{ $t('hasnot.account') }}</ion-text>
+          <ion-text routerLink="/auth/register" class="m13" style="color: var(--ion-color-primary); margin-left: 5px;">{{ $t('register') }}</ion-text>
+        </div>
+
         <ion-loading class="custom-loading" :message="$t('login.loging')" spinner="circles" :is-open="loging" ></ion-loading>
       </div>
     </ion-content>
 
     <ion-footer :translucent="false" style="box-shadow: none; background-color: var(--ion-color-bg);">
-      <div class="list" style="justify-content: center; margin-top: 40px; margin-bottom: 20px;">
-        <ion-text class="r13" style="color: var(--ion-color-primary);">{{ $t('hasnot.account') }}</ion-text>
-        <ion-text routerLink="/auth/register" class="m13" style="color: var(--ion-color-primary); margin-left: 5px;">{{ $t('register') }}</ion-text>
-      </div>
-      
       <ion-toolbar color="bg" style="padding: 10px 15px;--border-width: 0 0;">
         <div class="ion-toolbar">
           <ion-button expand="block" :disabled="userData.emailphone == '' || userData.pass == ''" @click="login();">{{ $t('login') }}</ion-button>
