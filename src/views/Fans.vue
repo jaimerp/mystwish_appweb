@@ -8,7 +8,7 @@ const router = useRouter();
 const VUE_ASSETS_URL = process.env.VUE_APP_ASSETS_URL;
 const APP_NAME = process.env.VUE_APP_NAME;
 
-const fans = ref(null);
+const fans = ref([]);
 const tooltipVisible = ref(null);
 const viewFanModal = ref(false);
 const fanToView = ref();
@@ -51,7 +51,7 @@ const onModalDidPresent = () => {
         <ion-text class="s26">{{ $t('fans.title') }}</ion-text>
       </div>
       <div class="ion-text-center" style="margin-top: 15px;">
-        <ion-grid class="grid">
+        <ion-grid class="grid" v-if="fans.length > 0">
           <ion-row>
             <ion-col
               size="6"
@@ -83,6 +83,9 @@ const onModalDidPresent = () => {
             </ion-col>
           </ion-row>
         </ion-grid>
+        <div v-else>
+          <ion-text class="s16">{{ $t('fans.no') }}</ion-text>
+        </div>
       </div>
     </div>
 

@@ -241,7 +241,7 @@ const confirmButtons = [
               label-placement="floating"
             />
           </div>
-          <div class="input" style="margin-top: 25px;"> 
+          <div class="input" style="margin-top: 45px;"> 
               <input id="phone" type="tel" autocomplete="off" :placeholder="$t('secrets.field.phone')"  v-model="secretData.phone" />
           </div>
           <ion-text class="r13" style="color:red;margin-top:10px;display:block;line-height: 16px !important;" v-if="secretToView!=null">{{ $t('secrets.field.phone.update.hint') }}</ion-text>
@@ -256,7 +256,7 @@ const confirmButtons = [
                   </div>
               </div>
           </div>
-          <div style="margin-top: 25px;">
+          <div style="margin-top: 45px;">
               <ion-text class="s16" style="display:block;margin-bottom:10px">{{ $t('secrets.field.notify.title') }}</ion-text>
               <div class="scroll list" style="margin-top:10px;">
                   <div class="chip" :class="{ 'selected-secret-type': secretData.notify }" @click="secretData.notify=true">
@@ -269,7 +269,7 @@ const confirmButtons = [
               <ion-text class="r12" style="margin-top:10px;display:block;line-height: 16px !important;">{{ $t('secrets.field.notify.hint') }}</ion-text>
           </div>
 
-          <div style="margin-top: 25px;" v-if="secretData.notify">
+          <div style="margin-top: 45px;" v-if="secretData.notify">
               <ion-text class="s16" style="display:block;margin-bottom:10px">{{ $t('secrets.field.hint.title') }}</ion-text>
               <div class="scroll list" style="margin-top:10px;">
                   <div class="chip" :class="{ 'selected-secret-type': withHint }" @click="withHint=true">
@@ -281,7 +281,7 @@ const confirmButtons = [
               </div>
               <ion-text class="r12" style="margin-top:10px;display:block;line-height: 16px !important;" v-if="!withHint">{{ $t('secrets.field.hint.hint') }}</ion-text>
           </div>
-          <div class="input" style="margin-top: 25px;padding-top:0px;height:100px;" v-if="withHint && secretData.notify"> 
+          <div class="input" style="margin-top: 45px;padding-top:0px;height:100px;" v-if="withHint && secretData.notify"> 
               <ion-textarea v-model="secretData.hint"
               :counter="true"
               maxlength="200"
@@ -290,7 +290,7 @@ const confirmButtons = [
               />
           </div>
 
-          <div style="margin-top: 25px;">
+          <div style="margin-top: 45px;">
               <ion-text class="s16" style="display:block;margin-bottom:10px">{{ $t('secrets.field.message.title') }}</ion-text>
               <div class="scroll list" style="margin-top:10px;">
                   <div class="chip" :class="{ 'selected-secret-type': withMessage }" @click="withMessage=true">
@@ -311,7 +311,7 @@ const confirmButtons = [
               />
           </div>
 
-          <div style="margin-top: 35px;display:flex;margin-bottom:10px;"> 
+          <div style="margin-top: 45px;display:flex;margin-bottom:10px;"> 
               <ion-button shape="round" class="button-secondary button-delete" style="margin-right:10px" @click="confirmVisible=!confirmVisible" v-if="secretToView != null">
                 <ion-icon slot="icon-only" icon="trash-outline" style="margin:10px;"></ion-icon>
               </ion-button>
