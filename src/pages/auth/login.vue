@@ -84,7 +84,7 @@ const login = () => {
   <ion-page>
     <ion-content class="ion-padding" v-bind="$attrs">
       <div>
-        <div class="ion-text-center" style="margin-top: 110px;">
+        <div class="ion-text-center" style="margin-top: 0px;">
           <ion-text class="s26">{{ $t('login.title') }}</ion-text>
         </div>
 
