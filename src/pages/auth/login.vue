@@ -19,12 +19,12 @@ const phoneInput = ref();
 
 const userData = ref({
   loginWith: 'phone',
-  email: 'jaime.rodriguez@ebolution.com',
-  phone: '689055333',
-  password: 'Jaimejaime%22',
+  email: process.env.VUE_APP_EMAIL_DEV,
+  phone: process.env.VUE_APP_PHONE_DEV,
+  password: process.env.VUE_APP_PASS_DEV,
   rememberme: false
 });
-
+console.log(process.env.VUE_APP_EMAIL_DEV)
 onMounted(() => {
   toPhoneInput();
   watch(userData.value.loginWith, async (newValue) => {
