@@ -218,9 +218,10 @@ const confirmButtons = [
     <ion-modal
         :is-open="viewSecretModal"
         css-class="rbsheet"
-        :initial-breakpoint="0.85"
-        :breakpoints="[0, 0.85]"
+        :initial-breakpoint="1"
+        :breakpoints="[0, 1]"
         handle-behavior="cycle"
+        fullscreen="true"
         @didDismiss="viewSecretModal=false"
         @didPresent="onModalDidPresent"
     >
@@ -234,91 +235,87 @@ const confirmButtons = [
           <div class="ion-text-center" style="margin-top: 5px;padding-bottom:20px;">
               <ion-text class="m19">{{ secretToView == null ? $t('secrets.title.new') : $t('secrets.title.edit') }}</ion-text>
           </div>
-          <div class="modal-content">
-            <div class="scrollable-content">
-              <div class="input" style="margin-top: 0px;padding-bottom:13px;"> 
-                <ion-input style="flex:1;" v-model="secretData.name"
-                  :label="$t('secrets.field.name')"
-                  label-placement="floating"
-                />
-              </div>
-              <div class="input" style="margin-top: 25px;"> 
-                  <input id="phone" type="tel" autocomplete="off" :placeholder="$t('secrets.field.phone')"  v-model="secretData.phone" />
-              </div>
-              <ion-text class="r13" style="color:red;margin-top:10px;display:block;line-height: 16px !important;" v-if="secretToView!=null">{{ $t('secrets.field.phone.update.hint') }}</ion-text>
-              <div style="margin-top: 25px;">
-                  <ion-text class="s16" style="display:block;margin-bottom:10px">{{ $t('secrets.field.type') }}</ion-text>
-                  <div class="scroll list">
-                      <div class="chip" :class="{ 'selected-secret-type': secretData.type === 'SEX' }" @click="secretData.type='SEX'">
-                      <ion-text class="m12">{{ $t('secret.sex') }}</ion-text>
-                      </div>
-                      <div class="chip" :class="{ 'selected-secret-type': secretData.type === 'LOVE' }" @click="secretData.type='LOVE'">
-                          <ion-text class="m12">{{ $t('secret.love') }}</ion-text>
-                      </div>
+          <div class="input" style="margin-top: 0px;padding-bottom:13px;"> 
+            <ion-input style="flex:1;" v-model="secretData.name"
+              :label="$t('secrets.field.name')"
+              label-placement="floating"
+            />
+          </div>
+          <div class="input" style="margin-top: 25px;"> 
+              <input id="phone" type="tel" autocomplete="off" :placeholder="$t('secrets.field.phone')"  v-model="secretData.phone" />
+          </div>
+          <ion-text class="r13" style="color:red;margin-top:10px;display:block;line-height: 16px !important;" v-if="secretToView!=null">{{ $t('secrets.field.phone.update.hint') }}</ion-text>
+          <div style="margin-top: 25px;">
+              <ion-text class="s16" style="display:block;margin-bottom:10px">{{ $t('secrets.field.type') }}</ion-text>
+              <div class="scroll list">
+                  <div class="chip" :class="{ 'selected-secret-type': secretData.type === 'SEX' }" @click="secretData.type='SEX'">
+                  <ion-text class="m12">{{ $t('secret.sex') }}</ion-text>
+                  </div>
+                  <div class="chip" :class="{ 'selected-secret-type': secretData.type === 'LOVE' }" @click="secretData.type='LOVE'">
+                      <ion-text class="m12">{{ $t('secret.love') }}</ion-text>
                   </div>
               </div>
-              <div style="margin-top: 25px;">
-                  <ion-text class="s16" style="display:block;margin-bottom:10px">{{ $t('secrets.field.notify.title') }}</ion-text>
-                  <div class="scroll list" style="margin-top:10px;">
-                      <div class="chip" :class="{ 'selected-secret-type': secretData.notify }" @click="secretData.notify=true">
-                      <ion-text class="m12">{{ $t('secrets.field.notify.yes') }}</ion-text>
-                      </div>
-                      <div class="chip" :class="{ 'selected-secret-type': !secretData.notify }" @click="secretData.notify=false">
-                          <ion-text class="m12">{{ $t('secrets.field.notify.no') }}</ion-text>
-                      </div>
+          </div>
+          <div style="margin-top: 25px;">
+              <ion-text class="s16" style="display:block;margin-bottom:10px">{{ $t('secrets.field.notify.title') }}</ion-text>
+              <div class="scroll list" style="margin-top:10px;">
+                  <div class="chip" :class="{ 'selected-secret-type': secretData.notify }" @click="secretData.notify=true">
+                  <ion-text class="m12">{{ $t('secrets.field.notify.yes') }}</ion-text>
                   </div>
-                  <ion-text class="r12" style="margin-top:10px;display:block;line-height: 16px !important;">{{ $t('secrets.field.notify.hint') }}</ion-text>
+                  <div class="chip" :class="{ 'selected-secret-type': !secretData.notify }" @click="secretData.notify=false">
+                      <ion-text class="m12">{{ $t('secrets.field.notify.no') }}</ion-text>
+                  </div>
               </div>
+              <ion-text class="r12" style="margin-top:10px;display:block;line-height: 16px !important;">{{ $t('secrets.field.notify.hint') }}</ion-text>
+          </div>
 
-              <div style="margin-top: 25px;" v-if="secretData.notify">
-                  <ion-text class="s16" style="display:block;margin-bottom:10px">{{ $t('secrets.field.hint.title') }}</ion-text>
-                  <div class="scroll list" style="margin-top:10px;">
-                      <div class="chip" :class="{ 'selected-secret-type': withHint }" @click="withHint=true">
-                      <ion-text class="m12">{{ $t('secrets.field.hint.yes') }}</ion-text>
-                      </div>
-                      <div class="chip" :class="{ 'selected-secret-type': !withHint }" @click="withHint=false">
-                          <ion-text class="m12">{{ $t('secrets.field.hint.no') }}</ion-text>
-                      </div>
+          <div style="margin-top: 25px;" v-if="secretData.notify">
+              <ion-text class="s16" style="display:block;margin-bottom:10px">{{ $t('secrets.field.hint.title') }}</ion-text>
+              <div class="scroll list" style="margin-top:10px;">
+                  <div class="chip" :class="{ 'selected-secret-type': withHint }" @click="withHint=true">
+                  <ion-text class="m12">{{ $t('secrets.field.hint.yes') }}</ion-text>
                   </div>
-                  <ion-text class="r12" style="margin-top:10px;display:block;line-height: 16px !important;" v-if="!withHint">{{ $t('secrets.field.hint.hint') }}</ion-text>
-              </div>
-              <div class="input" style="margin-top: 25px;padding-top:0px;height:100px;" v-if="withHint && secretData.notify"> 
-                  <ion-textarea v-model="secretData.hint"
-                  :counter="true"
-                  maxlength="200"
-                  :label="$t('secrets.field.hint')"
-                  label-placement="floating"
-                  />
-              </div>
-
-              <div style="margin-top: 25px;">
-                  <ion-text class="s16" style="display:block;margin-bottom:10px">{{ $t('secrets.field.message.title') }}</ion-text>
-                  <div class="scroll list" style="margin-top:10px;">
-                      <div class="chip" :class="{ 'selected-secret-type': withMessage }" @click="withMessage=true">
-                      <ion-text class="m12">{{ $t('secrets.field.message.yes') }}</ion-text>
-                      </div>
-                      <div class="chip" :class="{ 'selected-secret-type': !withMessage }" @click="withMessage=false">
-                          <ion-text class="m12">{{ $t('secrets.field.message.no') }}</ion-text>
-                      </div>
+                  <div class="chip" :class="{ 'selected-secret-type': !withHint }" @click="withHint=false">
+                      <ion-text class="m12">{{ $t('secrets.field.hint.no') }}</ion-text>
                   </div>
-                  <ion-text class="r12" style="margin-top:10px;display:block;line-height: 16px !important;" v-if="!withMessage">{{ $t('secrets.field.message.hint') }}</ion-text>
               </div>
-              <div class="input" style="margin-top: 25px;padding-top:0px;height:100px;" v-if="withMessage"> 
-                  <ion-textarea v-model="secretData.message"
-                  :counter="true"
-                  maxlength="200"
-                  :label="$t('secrets.field.message')"
-                  label-placement="floating"
-                  />
-              </div>
+              <ion-text class="r12" style="margin-top:10px;display:block;line-height: 16px !important;" v-if="!withHint">{{ $t('secrets.field.hint.hint') }}</ion-text>
+          </div>
+          <div class="input" style="margin-top: 25px;padding-top:0px;height:100px;" v-if="withHint && secretData.notify"> 
+              <ion-textarea v-model="secretData.hint"
+              :counter="true"
+              maxlength="200"
+              :label="$t('secrets.field.hint')"
+              label-placement="floating"
+              />
+          </div>
 
-              <div style="margin-top: 35px;display:flex;margin-bottom:100px;"> 
-                  <ion-button shape="round" class="button-secondary button-delete" style="margin-right:10px" @click="confirmVisible=!confirmVisible" v-if="secretToView != null">
-                    <ion-icon slot="icon-only" icon="trash-outline" style="margin:10px;"></ion-icon>
-                  </ion-button>
-                  <ion-button expand="block" style="width:100%" @click="updateSecret">{{ secretToView == null ? $t('secret.button.new') : $t('secret.button.update') }}</ion-button>
+          <div style="margin-top: 25px;">
+              <ion-text class="s16" style="display:block;margin-bottom:10px">{{ $t('secrets.field.message.title') }}</ion-text>
+              <div class="scroll list" style="margin-top:10px;">
+                  <div class="chip" :class="{ 'selected-secret-type': withMessage }" @click="withMessage=true">
+                  <ion-text class="m12">{{ $t('secrets.field.message.yes') }}</ion-text>
+                  </div>
+                  <div class="chip" :class="{ 'selected-secret-type': !withMessage }" @click="withMessage=false">
+                      <ion-text class="m12">{{ $t('secrets.field.message.no') }}</ion-text>
+                  </div>
               </div>
-            </div>
+              <ion-text class="r12" style="margin-top:10px;display:block;line-height: 16px !important;" v-if="!withMessage">{{ $t('secrets.field.message.hint') }}</ion-text>
+          </div>
+          <div class="input" style="margin-top: 25px;padding-top:0px;height:100px;" v-if="withMessage"> 
+              <ion-textarea v-model="secretData.message"
+              :counter="true"
+              maxlength="200"
+              :label="$t('secrets.field.message')"
+              label-placement="floating"
+              />
+          </div>
+
+          <div style="margin-top: 35px;display:flex;margin-bottom:10px;"> 
+              <ion-button shape="round" class="button-secondary button-delete" style="margin-right:10px" @click="confirmVisible=!confirmVisible" v-if="secretToView != null">
+                <ion-icon slot="icon-only" icon="trash-outline" style="margin:10px;"></ion-icon>
+              </ion-button>
+              <ion-button expand="block" style="width:100%" @click="updateSecret">{{ secretToView == null ? $t('secret.button.new') : $t('secret.button.update') }}</ion-button>
           </div>
         </ion-content>
     </ion-modal>
@@ -341,7 +338,7 @@ const confirmButtons = [
 .scrollable-content {
     flex: 1;
     overflow-y: auto;
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 100px);
     padding: 10px;
 }
 
