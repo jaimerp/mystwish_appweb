@@ -19,7 +19,6 @@ onMounted(() => {
 const destroyAlert = () => {
   useAlerts().alert.visible = false;
 };
-
 </script>
 <template>
   <ion-app>

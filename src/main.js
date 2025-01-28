@@ -10,6 +10,7 @@ import registerIonicComponents from './plugins/registerIonicComponents';
 import '@/theme/variables.scss';
 import '@/theme/global.scss';
 import '@/theme/fonts.scss';
+import '@/theme/class.scss';
 // Ionic Framework
 import { IonicVue } from '@ionic/vue';
 // Importa la configuración de los iconos

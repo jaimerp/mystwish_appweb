@@ -34,6 +34,17 @@ export const getFans = () => {
     })
 }
 
+export const getMatchs = () => {
+    return new Promise((resolve, reject) => {
+        axios.get('matchs/matchs')
+        .then (r => {
+            resolve(r.data.matchs);
+        }).catch(e => {
+            reject(e);
+        })
+    })
+}
+
 export const logout = () => {
     return new Promise((resolve, reject) => {
         axios.post('auth/logout')
@@ -45,3 +56,14 @@ export const logout = () => {
     })
 }
 
+export const getInitials = (fullName) => {
+    if (!fullName) return "?";
+    const parts = fullName.split(" ");
+    if (parts.length === 1) {
+      return parts[0].slice(0, 2).toUpperCase();
+    } else {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+  };
+  
+  

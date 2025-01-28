@@ -57,6 +57,10 @@ const routesTabs = [
         component: () => import('@/views/Secrets.vue'), // Vista de Secrets
       },
       {
+        path: 'matchs',
+        component: () => import('@/views/Matchs.vue'), // Vista de Matchs
+      },
+      {
         path: 'account',
         component: () => import('@/views/Account.vue'), // Vista de Account
       },

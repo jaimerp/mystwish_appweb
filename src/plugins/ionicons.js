@@ -13,6 +13,9 @@ import { arrowBack,
   createOutline,
   closeOutline,
   trashOutline,
+  pencilOutline,
+  chevronForward,
+  sadOutline,
  } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
@@ -31,5 +34,8 @@ addIcons({
   'flame-outline': flameOutline,
   'create-outline': createOutline,
   'close-outline': closeOutline,
-  'trash-outline': trashOutline
+  'trash-outline': trashOutline,
+  'pencil-outline': pencilOutline,
+  'chevron-forward': chevronForward,
+  'sad-outline': sadOutline
 });
