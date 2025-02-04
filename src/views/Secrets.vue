@@ -192,8 +192,8 @@ const confirmButtons = [
     <ion-modal
         :is-open="viewSecretModal"
         css-class="rbsheet"
-        :initial-breakpoint="1"
-        :breakpoints="[0, 1]"
+        :initial-breakpoint="0.88"
+        :breakpoints="[0, 0.88]"
         handle-behavior="cycle"
         fullscreen="true"
         @didDismiss="viewSecretModal=false"

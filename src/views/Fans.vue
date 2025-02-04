@@ -161,14 +161,14 @@ const onModalDidPresent = () => {
     </ion-modal>
   </ion-page>
   <ion-page v-else>
-    <ion-content class="ion-padding">
+    <ion-content class="ion-padding new-fan-container">
       <NewFan @done="() => (hideNewFanModal())" />
     </ion-content>
   </ion-page>
 </template>
 
 <style scoped>
-/* Estilo para el grid con líneas */
+.new-fan-container {--background: var(--ion-color-bg)}
 ion-modal.auto-height {
     --height: auto;
 }

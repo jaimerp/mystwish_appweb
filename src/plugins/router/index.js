@@ -1,14 +1,15 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { getLocalData, setLocalData } from '@/utils/localdata'
 
-const isAuthenticated = () => {
-  return !!getLocalData('authToken');
+const isAuthenticated = async() => {
+  let authenticated = await getLocalData('authToken')
+  return authenticated == null ? false : true;
 };
-const introViewed = () => {
-  return getLocalData('intro');
+const introViewed = async() => {
+  return await getLocalData('intro');
 };
-const hasLang = () => {
-  return getLocalData('lang');
+const hasLang = async() => {
+  return await getLocalData('lang');
 };
 
 const pages = require.context('@/pages', true, /\.vue$/);
@@ -80,28 +81,24 @@ const router = createRouter({
   routes,
 });
 
-// Guard de navegación global para autenticación
-router.beforeEach((to, from, next) => {
-  const isAuthRoute = to.path.startsWith('/auth/'); // Verifica si es una ruta dentro de /auth/*
-
+router.beforeEach(async(to, from, next) => {
+  const isAuthRoute = to.path.startsWith('/auth/');
+  const intro = await introViewed();
   if (to.path == '/lang') next();
   else{
-    if (!isAuthenticated()) {
-      // Si no está autenticado
+    if (!await isAuthenticated()) {
       if (isAuthRoute) {
-        next();
+        if (to.path == '/auth/intro' && intro) {console.log("Paso");next('/auth/login');}
+        else next();
       } else {
-        if (!hasLang()) next('/lang');
-        else if (!introViewed()) next('/auth/intro');
-        else next('/auth/login');
+        if (!await hasLang()) next('/lang');
+        else if (intro == true) next('/auth/login');
+        else next('/auth/intro');
       }
     } else {
-      // Si está autenticado
       if (isAuthRoute) {
-        // Redirigir a la raíz si intenta acceder a /auth/*
         next('/');
       } else {
-        // Permitir acceso a otras rutas
         next();
       }
     }

@@ -7,8 +7,6 @@ import axios from '@/plugins/axios.js';
 import { useAlerts } from '@/store/alerts.js'
 import { loadPhoneInput } from '@/utils/register.js';
 
-setLocalData('intro', true);
-
 const { locale } = useI18n();
 const router = useRouter();
 const loging = ref(false);
@@ -16,6 +14,8 @@ const emailPhoneError = ref('');
 const passError = ref('');
 const refPhoneInput = ref(null);
 const phoneInput = ref();
+const VUE_ASSETS_URL = process.env.VUE_APP_ASSETS_URL;
+const APP_NAME = process.env.VUE_APP_NAME;
 
 const userData = ref({
   loginWith: 'phone',
@@ -28,6 +28,7 @@ const userData = ref({
 const loginWith = computed(() => userData.value.loginWith);
 
 onMounted(() => {
+  setLocalData('intro', 'true');
   toPhoneInput();
   watch(loginWith, async (newValue) => {
     if (newValue === 'phone') {
@@ -53,7 +54,8 @@ const login = () => {
       if (r.status == 200) {
         setLocalData('authToken', JSON.stringify(r.data.accessToken));
         setLocalData('userData', JSON.stringify(r.data.userData));
-        router.push('/');
+        window.location = "/";
+        // router.push('/');
       }else{
         useAlerts().alert = {visible: true, message: r.data.message, class: 'alert-error'}
       }
@@ -82,9 +84,15 @@ const login = () => {
 
 <template>
   <ion-page>
-    <ion-content class="ion-padding" v-bind="$attrs">
+    <ion-header>
+      <ion-toolbar></ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding" v-bind="$attrs" :fullscreen="true" style="--background: var(--ion-color-bg)">
       <div>
-        <div class="ion-text-center" style="margin-top: 0px;">
+        <div class="ion-text-center logo">
+          <img :src="VUE_ASSETS_URL + 'logo2.png'" :alt="APP_NAME" style="max-width: 180px;">
+        </div>
+        <div class="ion-text-center mt-8">
           <ion-text class="s26">{{ $t('login.title') }}</ion-text>
         </div>
 

@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { getLocalData, setLocalData } from '@/utils/localdata';
 import {languages} from '@/utils/languages';
 import { changeLanguage } from '@/plugins/i18n/index'
@@ -8,14 +8,19 @@ import { changeLanguage } from '@/plugins/i18n/index'
 const VUE_ASSETS_URL = process.env.VUE_APP_ASSETS_URL;
 const APP_NAME = process.env.VUE_APP_NAME
 const router = useRouter();
-const currentLang = ref(getLocalData('lang'));
+const currentLang = ref();
 
-const toNext = (lang) => {
+const toNext = async(lang) => {
   setLocalData('lang', lang);
   changeLanguage(lang);
-  if (getLocalData('intro')) router.push({path: '/auth/login'});
+  let intro = await getLocalData('intro');
+  if (intro) router.push({path: '/auth/login'});
   else router.push({path: '/auth/intro'});
 }
+
+onMounted(async() => {
+  currentLang.value = await getLocalData('lang');
+})
 </script>
 
 

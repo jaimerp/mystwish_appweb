@@ -11,18 +11,18 @@ export default i18n;
 
 const loadLocaleMessages = async (locale) => {
   try {
-    const messages = await import(`./locales/${locale}.json`);
-    i18n.global.setLocaleMessage(locale, messages.default);
+    const messagesModule = await import(`./locales/${locale}.json`);
+    const messages = messagesModule.default; // ✅ Asegurar que obtenemos el objeto real
+    i18n.global.setLocaleMessage(locale, messages);
   } catch (error) {
     console.error(`Error al cargar el archivo de idioma '${locale}':`, error);
   }
 };
 
 export const changeLanguage = async (lang) => {
-  // Cargar mensajes si aún no están disponibles
-  if (!i18n.global.availableLocales.includes(lang)) {
+  if (!Object.keys(i18n.global.getLocaleMessage(lang)).length) {
     await loadLocaleMessages(lang);
   }
-  // Cambiar el idioma actual
+
   i18n.global.locale = lang;
 };

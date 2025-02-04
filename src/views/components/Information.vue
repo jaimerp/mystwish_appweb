@@ -14,6 +14,7 @@ const props = defineProps({
 
 // Cargar datos al montar la página
 onMounted(async () => {
+  console.log("ssss")
   if (props.typeInfo){
     textInformation.value = '';
     if (props.typeInfo == 'FANS')
@@ -23,7 +24,7 @@ onMounted(async () => {
     else if (props.typeInfo == 'MATCHS')
       textInformation.value = 'match.information';
     
-    isVisible.value = getLocalData('MW_Info_'+props.typeInfo) ? !getLocalData('MW_Info_'+props.typeInfo) : true ;
+    isVisible.value = await getLocalData('MW_Info_'+props.typeInfo) ? ! await getLocalData('MW_Info_'+props.typeInfo) : true ;
   }
 });
 

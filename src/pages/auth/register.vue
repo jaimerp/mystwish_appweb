@@ -8,11 +8,10 @@ import axios from '@/plugins/axios.js';
 import { useAlerts } from '@/store/alerts.js'
 import phoneCode from '@/views/components/register/phoneCode.vue'
 
-setLocalData('intro', true);
-
 const { locale } = useI18n();
 const router = useRouter();
 const APP_NAME = process.env.VUE_APP_NAME;
+const VUE_ASSETS_URL = process.env.VUE_APP_ASSETS_URL;
 const step = ref(1);
 const sendingPhoneCode = ref(false);
 const checkingPhoneCode = ref(false);
@@ -36,8 +35,9 @@ const userData = ref({
   newsletter: 0,
 });
 
-onMounted(() => {
-  let dataTemp = getLocalData('registerData');
+onMounted(async() => {
+  setLocalData('intro', 'true');
+  let dataTemp = await getLocalData('registerData');
   if (dataTemp){
     userData.value = JSON.parse(dataTemp);
     userData.value.name = '';
@@ -146,7 +146,11 @@ const save = () => {
 
 <template>
   <ion-page>
-    <ion-content class="ion-padding" v-bind="$attrs">
+    <ion-header><ion-toolbar></ion-toolbar></ion-header>
+    <ion-content class="ion-padding" v-bind="$attrs" style="--background: var(--ion-color-bg)">
+      <div class="ion-text-center logo">
+        <img :src="VUE_ASSETS_URL + 'logo2.png'" :alt="APP_NAME" style="max-width: 180px;">
+      </div>
       <div v-if="step == 1">
         <div class="ion-text-center" style="margin-top: 150px;">
           <ion-text class="s26">{{ $t('register.gender.choose') }}</ion-text>

@@ -1,6 +1,6 @@
 {
-  "appId": "com.matchly.app",
-  "appName": "Matchly",
-  "webDir": "public",
+  "appId": "com.mystwish.app",
+  "appName": "Mystwish",
+  "webDir": "dist",
   "bundledWebRuntime": false
 }

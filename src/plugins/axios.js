@@ -14,9 +14,9 @@ const $api = axios.create({
 
 
   // ℹ️ Add request interceptor to send the authorization header on each subsequent request after login
-  $api.interceptors.request.use(config => {
+  $api.interceptors.request.use(async (config) => {
     // Retrieve token from localStorage
-    const token = getLocalData('authToken')
+    const token = await getLocalData('authToken')
 
     // If token is found
     if (token) {

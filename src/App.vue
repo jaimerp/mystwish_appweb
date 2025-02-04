@@ -9,10 +9,10 @@ import { changeLanguage } from '@/plugins/i18n/index'
 const router = useRouter();
 const { locale } = useI18n();
 
-onMounted(() => {
-  if (!getLocalData('lang')) router.push({path: '/lang'});
+onMounted(async () => {
+  if (!await getLocalData('lang')) router.push({path: '/lang'});
   else {
-    changeLanguage(getLocalData('lang'))
+    changeLanguage(await getLocalData('lang'))
   }
 })
 

@@ -37,9 +37,7 @@
 
 ion-content {
   // overwrite inline styles
-  --offset-bottom: auto !important;
   --overflow: hidden;
-  background: var(--ion-color-bg);
   overflow: auto;
   &::-webkit-scrollbar {
     display: none;
@@ -56,6 +54,7 @@ ion-content {
 //   // --color:#151517;
 // }
 
+.header-ios ion-toolbar:last-of-type { border: 0px !important; --border-width:0px; }
 .ios ion-toolbar {
   // padding: 10px 15px;
   --padding-top: 5px;

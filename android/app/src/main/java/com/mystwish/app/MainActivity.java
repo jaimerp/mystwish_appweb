@@ -1,4 +1,4 @@
-package com.matchly.app;
+package com.mystwish.app;
 
 import com.getcapacitor.BridgeActivity;
 

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Matchly</string>
-    <string name="title_activity_main">Matchly</string>
-    <string name="package_name">com.matchly.app</string>
-    <string name="custom_url_scheme">com.matchly.app</string>
+    <string name="app_name">Mystwish</string>
+    <string name="title_activity_main">Mystwish</string>
+    <string name="package_name">com.mystwish.app</string>
+    <string name="custom_url_scheme">com.mystwish.app</string>
 </resources>

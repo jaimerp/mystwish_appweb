@@ -18,6 +18,12 @@
     "gender": "Genero",
     "newsletter": "Recibir notificaciones e información de Mystwish",
     "loading": "Cargando...",
+    "man": "Hombre",
+    "woman": "Mujer",
+    "neutral": "Género Neutral",
+    "no": "No",
+    "yes": "Si",
+    "save": "Guardar",
 
     "msg.form.error": "Error en el formulario",
     "msg.form.field.required": "Campo obligatorio",
@@ -159,7 +165,6 @@
 
     "account.title": "Tu cuenta",
     "account.password.change": "Cambiar ontraseña",
-    "account.phone": "Tu cuenta",
 
     "o": "o"
 }

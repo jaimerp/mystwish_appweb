@@ -39,51 +39,58 @@ const hideMatchModal = () => {
 </script>
 
 <template>
-  <ion-page class="ion-padding" v-if="!matchView && loading">
-    <div class="ion-text-center logo">
-      <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 180px;">
-    </div>
-    <div class="box">
-      <div class="spinner-inline loading">
-        <ion-spinner name="crescent" color="primary"></ion-spinner>
-        <ion-text class="s18 mt-3">{{ $t('loading') }}</ion-text>
+  <div>
+    <ion-page class="ion-padding" v-if="!matchView && loading">
+      <div class="ion-text-center logo">
+        <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 180px;">
       </div>
-    </div>
-  </ion-page>
-  <ion-page v-if="!matchView && !loading">
-      <ion-tabs :class="{ 'hide-tabs': tabsStore.hideTabs }">
-        <ion-router-outlet></ion-router-outlet>
-        <ion-tab-bar slot="bottom">
-          <ion-tab-button tab="fans" href="/app/fans">
-              <ion-icon icon="heart-half-outline" size="10" />
-              {{ $t('tabs.fans') }}
-              <ion-badge v-if="dataStore.fans?.length > 0">{{ dataStore.fans?.length }}</ion-badge>
-          </ion-tab-button>
-          <ion-tab-button tab="secrets" href="/app/secrets">
-              <ion-icon icon="heart-outline" size="10" />
-              {{ $t('tabs.secrets') }}
-              <ion-badge v-if="dataStore.secrets?.length > 0">{{ dataStore.secrets?.length }}</ion-badge>
-          </ion-tab-button>
-          <ion-tab-button tab="matchs" href="/app/matchs">
-              <ion-icon icon="heart-half-outline" size="10" />
-              {{ $t('tabs.matchs') }}
-              <ion-badge v-if="dataStore.matchs?.length > 0">{{ dataStore.matchs?.length }}</ion-badge>
-          </ion-tab-button>
-          <ion-tab-button tab="account" href="/app/account">
-              <ion-icon icon="person-circle-outline" size="10" />
-              {{ $t('tabs.account') }}
-          </ion-tab-button>
-        </ion-tab-bar>
-    </ion-tabs>
-  </ion-page>
-  <ion-page v-if="matchView && !loading">
-    <ion-content class="ion-padding">
-      <NewMatch @done="() => (hideMatchModal())" />
-    </ion-content>
-  </ion-page>
+      <div class="box">
+        <div class="spinner-inline loading">
+          <ion-spinner name="crescent" color="primary"></ion-spinner>
+          <ion-text class="s18 mt-3">{{ $t('loading') }}</ion-text>
+        </div>
+      </div>
+    </ion-page>
+    <ion-page v-if="!matchView && !loading">
+      <ion-header><ion-toolbar></ion-toolbar></ion-header>
+      <ion-content>
+        <ion-tabs :class="{ 'hide-tabs': tabsStore.hideTabs }">
+          <ion-router-outlet></ion-router-outlet>
+          <ion-tab-bar slot="bottom">
+            <ion-tab-button tab="fans" href="/app/fans">
+                <ion-icon icon="heart-half-outline" size="10" />
+                {{ $t('tabs.fans') }}
+                <ion-badge v-if="dataStore.fans?.length > 0">{{ dataStore.fans?.length }}</ion-badge>
+            </ion-tab-button>
+            <ion-tab-button tab="secrets" href="/app/secrets">
+                <ion-icon icon="heart-outline" size="10" />
+                {{ $t('tabs.secrets') }}
+                <ion-badge v-if="dataStore.secrets?.length > 0">{{ dataStore.secrets?.length }}</ion-badge>
+            </ion-tab-button>
+            <ion-tab-button tab="matchs" href="/app/matchs">
+                <ion-icon icon="heart-half-outline" size="10" />
+                {{ $t('tabs.matchs') }}
+                <ion-badge v-if="dataStore.matchs?.length > 0">{{ dataStore.matchs?.length }}</ion-badge>
+            </ion-tab-button>
+            <ion-tab-button tab="account" href="/app/account">
+                <ion-icon icon="person-circle-outline" size="10" />
+                {{ $t('tabs.account') }}
+            </ion-tab-button>
+          </ion-tab-bar>
+        </ion-tabs>
+      </ion-content>
+    </ion-page>
+    <ion-page v-if="matchView && !loading">
+      <ion-content class="ion-padding new-match-container">
+        <NewMatch @done="() => (hideMatchModal())" />
+      </ion-content>
+    </ion-page>
+  </div>
 </template>
 
 <style scoped>
+.new-match-container {--background: var(--ion-color-bg)}
+.ios ion-toolbar { --background: var(--ion-color-primary);}
 .box {
   position: absolute;
   top: 40%;
@@ -112,7 +119,6 @@ ion-tabs{
 ion-tab-bar  {
     background: #121212;
     width: 98% !important;
-    max-width: 400px !important;
     border-radius: 20px;
     margin: 5px 0px 5px 1% !important;
     max-height: 56px;
