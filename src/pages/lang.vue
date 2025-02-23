@@ -26,10 +26,14 @@ onMounted(async() => {
 
 <template>
   <ion-page>
+    <ion-header>
+      <ion-toolbar>
+        <div class="ion-text-center logo">
+          <ion-img :src="VUE_ASSETS_URL+'logo.png'" :alt="APP_NAME" style="max-width: 200px; height: auto;" />
+        </div>
+      </ion-toolbar>
+    </ion-header>
     <ion-content :fullscreen="true" class="ion-padding" style="background-color: var(--ion-color-primary);" v-bind="$attrs">
-      <div class="ion-text-center logo">
-        <ion-img :src="VUE_ASSETS_URL+'logo.png'" :alt="APP_NAME" style="max-width: 200px; height: auto;" />
-      </div>
       <div class="box" style="margin-bottom: 20px;">
         <div class="ion-text-center">
             <ion-text class="s26">{{ $t('language.title') }}</ion-text>
@@ -52,9 +56,11 @@ onMounted(async() => {
 </template>
   
   <style scoped>
+  ion-header ion-toolbar {--background: var(--ion-color-primary) !important;background: var(--ion-color-primary) !important;}
+  ion-header ion-toolbar .ios {padding-top: 30px;}
   .box{position:fixed; bottom: 0;right:15px;left:15px;}
   .logo {
-    display: flex; justify-content: center; align-items: center; height: 55vh;
+    display: flex; justify-content: center; align-items: center;
   }
   .flag-container {
     display: flex;

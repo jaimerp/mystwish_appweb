@@ -121,13 +121,13 @@ const onModalDidPresent = () => {
     <ion-modal
       :is-open="viewFanModal"
       css-class="rbsheet"
-      :initial-breakpoint="0.55"
-      :breakpoints="[0, 0.55]"
+      :initial-breakpoint="0.45"
+      :breakpoints="[0, 0.45]"
       handle-behavior="cycle"
       @didDismiss="viewFanModal=false"
       @didPresent="onModalDidPresent"
     >
-      <ion-content class="ion-padding">
+      <ion-content class="ion-padding modal-scrollable">
         <div ref="divRef">
           <div class="column" style="align-items: flex-end;">
             <ion-icon @click="viewFanModal=false" icon="close-outline" style="font-size: 24px; color: var(--ion-color-primary);" />
@@ -161,32 +161,17 @@ const onModalDidPresent = () => {
     </ion-modal>
   </ion-page>
   <ion-page v-else>
-    <ion-content class="ion-padding new-fan-container">
+    <ion-content class="new-fan-container">
       <NewFan @done="() => (hideNewFanModal())" />
     </ion-content>
   </ion-page>
 </template>
 
 <style scoped>
-.new-fan-container {--background: var(--ion-color-bg)}
-ion-modal.auto-height {
-    --height: auto;
-}
-ion-modal.auto-height .ion-page {
-    position: relative;
-    display: block;
-    contain: content;
-}
-ion-modal.auto-height .ion-page .inner-content {
-    max-height: 80vh;
-    overflow: auto;
-}
+.modal-scrollable { overflow-y: auto; --overflow: auto;}
+ion-modal .ion-page { height: 45% !important;}
 
-ion-content {
-  display: block;
-  max-height: 100%;
-  overflow-y: auto !important;
-}
+.new-fan-container {--background: var(--ion-color-bg)}
 .grid {
   border-collapse: collapse;
 }

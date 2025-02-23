@@ -85,12 +85,12 @@ onMounted(async () => {
     <ion-modal
       :is-open="viewMatchModal"
       css-class="rbsheet"
-      :initial-breakpoint="0.65"
-      :breakpoints="[0, 0.65]"
+      :initial-breakpoint="0.50"
+      :breakpoints="[0, 0.50]"
       handle-behavior="cycle"
       @didDismiss="viewMatchModal=false"
     >
-      <ion-content class="ion-padding">
+      <ion-content class="ion-padding modal-scrollable">
         <div style="overflow-y: auto;  max-height: 60vh;">
           <div class="column" style="align-items: flex-end;">
             <ion-icon @click="viewMatchModal=false" icon="close-outline" style="font-size: 24px; color: var(--ion-color-primary);" />
@@ -135,24 +135,9 @@ onMounted(async () => {
 
 <style scoped>
 /* Estilo para el grid con líneas */
-ion-modal.auto-height {
-    --height: auto;
-}
-ion-modal.auto-height .ion-page {
-    position: relative;
-    display: block;
-    contain: content;
-}
-ion-modal.auto-height .ion-page .inner-content {
-    max-height: 80vh;
-    overflow: auto;
-}
+.modal-scrollable { overflow-y: auto; --overflow: auto;}
+ion-modal .ion-page { height: 50% !important;}
 
-ion-content {
-  display: block;
-  max-height: 100%;
-  overflow-y: auto !important;
-}
 .grid {
   border-collapse: collapse;
 }

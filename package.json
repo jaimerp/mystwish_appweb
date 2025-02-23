@@ -23,7 +23,6 @@
     "@ionic/vue-router": "^8.4.1",
     "axios": "^1.7.9",
     "core-js": "^3.39.0",
-    "intl-tel-input": "^25.0.1",
     "js-cookie": "^3.0.5",
     "pinia": "^2.3.0",
     "sass": "^1.82.0",

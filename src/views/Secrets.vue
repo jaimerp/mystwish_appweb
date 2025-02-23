@@ -55,7 +55,7 @@ const editSecret = async(secret) => {
       else withMessage.value = true;
     }
     else {
-      secretData.value = {name: '',prefix: '',phone: '',type: '',hint: ''}
+      secretData.value = {name: '',prefix: '',phone: '',type: '',hint: '', notify: false}
       withHint.value = false;
       withMessage.value = false;
     }
@@ -199,7 +199,7 @@ const confirmButtons = [
         @didDismiss="viewSecretModal=false"
         @didPresent="onModalDidPresent"
     >
-        <ion-content class="ion-padding">
+        <ion-content class="ion-padding modal-scrollable">
           <ion-loading class="custom-loading" :message="$t('saving')" spinner="circles" :is-open="updating" ></ion-loading>
 
           <div class="column ion-align-items-end">
@@ -303,19 +303,8 @@ const confirmButtons = [
 </template>
 
 <style>
-.modal-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.scrollable-content {
-    flex: 1;
-    overflow-y: auto;
-    max-height: calc(100vh - 100px);
-    padding: 10px;
-}
-
+.modal-scrollable { overflow-y:auto; --overflow: auto;}
+ion-modal .ion-page { height: 88vh; height: 88%;}
 .grid {
   border-collapse: collapse;
 }
@@ -394,13 +383,15 @@ const confirmButtons = [
 #phone {color: var(--ion-color-primary) !important; border: none !important; background: transparent;outline: none; font-weight: normal;}
 .iti__selected-dial-code {font-size: 16px;}
 .selected-secret-type {background-color: var(--ion-color-primary);}
-    .selected-secret-type ion-text {color:#fff;}
-    .chip ion-text{font-size: 14px;;}
-    .chip {margin-right: 5px;}
+  .selected-secret-type ion-text {color:#fff;}
+  .chip ion-text{font-size: 14px;;}
+  .chip {margin-right: 5px;}
 
 
-    button.alert-button {
-    color: #fff !important;
-  }
-  .pointer {cursor:pointer;}
+  button.alert-button {
+  color: #fff !important;
+}
+
+.pointer {cursor:pointer;}
+
 </style>

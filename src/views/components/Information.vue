@@ -14,7 +14,6 @@ const props = defineProps({
 
 // Cargar datos al montar la página
 onMounted(async () => {
-  console.log("ssss")
   if (props.typeInfo){
     textInformation.value = '';
     if (props.typeInfo == 'FANS')

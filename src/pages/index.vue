@@ -28,7 +28,6 @@ const hideMatchModal = () => {
   try{
     axios.post('/secrets/no-newmatch')
       .then (async r => {
-        console.log(r)
       }).catch(e => {
         console.error(e)
       })

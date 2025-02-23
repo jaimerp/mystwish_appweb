@@ -88,7 +88,7 @@ router.beforeEach(async(to, from, next) => {
   else{
     if (!await isAuthenticated()) {
       if (isAuthRoute) {
-        if (to.path == '/auth/intro' && intro) {console.log("Paso");next('/auth/login');}
+        if (to.path == '/auth/intro' && intro) next('/auth/login');
         else next();
       } else {
         if (!await hasLang()) next('/lang');

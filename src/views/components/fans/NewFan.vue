@@ -48,7 +48,7 @@ const done = () => {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100vh;
+    height: 95vh;
     padding: 20px;
   }
   
@@ -73,7 +73,7 @@ const done = () => {
   }
 
   .icon-image {
-    height: 60%;
+    height: 40%;
     margin-top: 30px;
   }
   

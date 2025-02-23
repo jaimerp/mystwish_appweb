@@ -2,11 +2,12 @@
 import { useRouter } from 'vue-router';
 import { ref, onMounted, watch, nextTick } from 'vue';
 import { getLocalData, setLocalData } from '@/utils/localdata';
-import { loadPhoneInput, validateRegisterData } from '@/utils/register.js';
+import { validateRegisterData } from '@/utils/register.js';
 import { useI18n } from 'vue-i18n';
 import axios from '@/plugins/axios.js';
 import { useAlerts } from '@/store/alerts.js'
 import phoneCode from '@/views/components/register/phoneCode.vue'
+import Phone from '@/views/components/Phone.vue'
 
 const { locale } = useI18n();
 const router = useRouter();
@@ -16,12 +17,12 @@ const step = ref(1);
 const sendingPhoneCode = ref(false);
 const checkingPhoneCode = ref(false);
 const registering = ref(false);
-const phoneInput = ref();
 const phoneCodeValue = ref('');
 const nameError = ref('');
 const emailError = ref('');
 const passError = ref('');
 const policyError = ref('');
+const lang = ref();
 
 const userData = ref({
   gender: '',
@@ -37,6 +38,7 @@ const userData = ref({
 
 onMounted(async() => {
   setLocalData('intro', 'true');
+  lang.value = await getLocalData('lang')
   let dataTemp = await getLocalData('registerData');
   if (dataTemp){
     userData.value = JSON.parse(dataTemp);
@@ -46,22 +48,20 @@ onMounted(async() => {
     userData.value.pass_confirm = '';
     userData.value.policy = 0;
   }
-  watch(step, async (newStep) => {
-    if (newStep === 2) {
-      await nextTick();
-      const input = document.querySelector("#phone");
-      phoneInput.value = await loadPhoneInput(locale, input);
-    }
-  });
+  if (step.value === 2) {
+    // await nextTick();
+    // const input = document.querySelector("#phone");
+    // phoneInput.value = await loadPhoneInput(locale, input);
+  }
 });
 
 const saveDataTemp = () => {
-  if (phoneInput.value) userData.value.prefix = phoneInput.value.getSelectedCountryData().dialCode;
-  setLocalData('registerData', JSON.stringify(userData.value));
+  // if (phoneInput.value) userData.value.prefix = phoneInput.value.getSelectedCountryData().dialCode;
+  // setLocalData('registerData', JSON.stringify(userData.value));
 }
 
 const registerPhone = () => {
-  userData.value.prefix = phoneInput.value.getSelectedCountryData().dialCode;
+  userData.value.lang = lang.value;
   setLocalData('prefix', userData.value.prefix);
   sendingPhoneCode.value = true;
   axios.post('/register/phone-step', userData.value)
@@ -79,6 +79,7 @@ const registerPhone = () => {
 }
 const resendCode = () => {
   sendingPhoneCode.value = true;
+  userData.value.lang = lang.value;
   axios.post('/register/resend-code', userData.value)
     .then (async r => {
       sendingPhoneCode.value = false;
@@ -95,7 +96,7 @@ const resendCode = () => {
 
 const checkPhoneCode = () => {
   checkingPhoneCode.value = true;
-  let data = {prefix: userData.value.prefix, phone: userData.value.phone, code: phoneCodeValue.value}
+  let data = {prefix: userData.value.prefix, phone: userData.value.phone, code: phoneCodeValue.value, lang: lang.value};
   axios.post('/register/check-code', data)
     .then (async r => {
       checkingPhoneCode.value = false;
@@ -128,6 +129,7 @@ const registerUser = () => {
 
 const save = () => {
   registering.value = true;
+  userData.value.lang = lang.value;
   axios.post('/register/register', userData.value)
     .then (async r => {
       registering.value = false;
@@ -146,13 +148,16 @@ const save = () => {
 
 <template>
   <ion-page>
-    <ion-header><ion-toolbar></ion-toolbar></ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <div class="ion-text-center logo">
+          <img :src="VUE_ASSETS_URL + 'logo2.png'" :alt="APP_NAME" style="max-width: 200px;">
+        </div>
+      </ion-toolbar>
+    </ion-header>
     <ion-content class="ion-padding" v-bind="$attrs" style="--background: var(--ion-color-bg)">
-      <div class="ion-text-center logo">
-        <img :src="VUE_ASSETS_URL + 'logo2.png'" :alt="APP_NAME" style="max-width: 180px;">
-      </div>
-      <div v-if="step == 1">
-        <div class="ion-text-center" style="margin-top: 150px;">
+      <div v-if="step == 1" class="vertical-center">
+        <div class="ion-text-center">
           <ion-text class="s26">{{ $t('register.gender.choose') }}</ion-text>
         </div>
 
@@ -173,8 +178,9 @@ const save = () => {
           <ion-text class="s26">{{ $t('register.phone.title') }}</ion-text>
         </div>
 
-        <div class="input" style="margin-top: 35px;">
-          <input id="phone" type="tel" autocomplete="off" v-model="userData.phone" />
+        <div class="input" style="margin-top: 25px;">
+          <Phone :phone="userData.phone" :prefix="userData.prefix" />
+          <!-- <input id="phone" type="tel" autocomplete="off" v-model="userData.phone" /> -->
           <ion-loading class="custom-loading" :message="$t('register.phone.sending')" spinner="circles" :is-open="sendingPhoneCode" ></ion-loading>
         </div>
       </div>
@@ -258,16 +264,16 @@ const save = () => {
           <ion-text class="r15" >{{ $t('register.registered.subtitle') }}</ion-text>
         </div>
       </div>
-      <div class="list" style="justify-content: center; margin-top: 40px; margin-bottom: 20px;" v-if="step < 5">
-        <ion-text class="r13" style="color: var(--ion-color-dis);">{{ $t('already.account') }}</ion-text>
-        <ion-text routerLink="/auth/login" class="m13" style="color: var(--ion-color-primary); margin-left: 5px;">{{ $t('login') }}</ion-text>
-      </div>
     </ion-content>
 
     <ion-footer :translucent="false" style="box-shadow: none; background-color: var(--ion-color-bg);">      
+      <div class="list" style="justify-content: center;" v-if="step < 5">
+        <ion-text class="r13" style="color: var(--ion-color-dis);">{{ $t('already.account') }}</ion-text>
+        <ion-text routerLink="/auth/login" class="m13" style="color: var(--ion-color-primary); margin-left: 5px;">{{ $t('login') }}</ion-text>
+      </div>
       <ion-toolbar color="bg" style="padding: 10px 15px;--border-width: 0 0;">
         <div class="ion-toolbar">
-          <ion-button shape="round" class="button-previous button-secondary" @click="step--" v-if="step > 1 && step < 4">
+          <ion-button shape="round" class="button-previous button-secondary" @click="step--" v-if="step > 1 && step < 4" style="padding-bottom:2px !important;">
             <ion-icon slot="icon-only" icon="arrow-back" style="margin:20px;"></ion-icon>
           </ion-button>
 
@@ -283,11 +289,22 @@ const save = () => {
 </template>
 
 <style scoped>
+  .ios ion-header ion-toolbar {padding-top: 30px !important;}
+  .ios ion-footer ion-toolbar .ios {padding-bottom: 30px !important;}
+  .ion-toolbar {display:flex;align-items: center;}
+
+  *::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .modal-scrollable { 
+    overflow-y:auto; 
+    --overflow: auto;
+  }
+
   .selectedGender {border-color: var(--ion-color-primary);} 
   #phone {color: var(--ion-color-primary) !important; font-size: 20px; border: none !important; background: transparent;outline: none; font-weight: normal;}
-  ion-footer {position: fixed;bottom: 20px;}
 
-  .ion-toolbar {display:flex;align-items: center;}
   .button-next {flex-grow: 1}
   .button-previous {flex-shrink: 0;margin-right: 10px;;}
 
@@ -299,5 +316,13 @@ const save = () => {
   ion-checkbox::part(container) {
     border-radius: 60px;
     border: 1px solid  var(--ion-color-primary);    
+  }
+
+  .vertical-center 
+  {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
   }
 </style>

@@ -5,49 +5,37 @@ import { getLocalData, setLocalData } from '@/utils/localdata';
 import { useI18n } from 'vue-i18n';
 import axios from '@/plugins/axios.js';
 import { useAlerts } from '@/store/alerts.js'
-import { loadPhoneInput } from '@/utils/register.js';
 
 const { locale } = useI18n();
 const router = useRouter();
 const loging = ref(false);
 const emailPhoneError = ref('');
 const passError = ref('');
-const refPhoneInput = ref(null);
-const phoneInput = ref();
 const VUE_ASSETS_URL = process.env.VUE_APP_ASSETS_URL;
 const APP_NAME = process.env.VUE_APP_NAME;
+const lang = ref();
 
 const userData = ref({
   loginWith: 'phone',
   email: process.env.VUE_APP_EMAIL_DEV,
   phone: process.env.VUE_APP_PHONE_DEV,
   password: process.env.VUE_APP_PASS_DEV,
-  rememberme: false
+  rememberme: false,
+  prefix:undefined
 });
 
 const loginWith = computed(() => userData.value.loginWith);
 
-onMounted(() => {
+onMounted(async () => {
   setLocalData('intro', 'true');
-  toPhoneInput();
-  watch(loginWith, async (newValue) => {
-    if (newValue === 'phone') {
-      await toPhoneInput();
-    }
-  });
+  lang.value = await getLocalData('lang')
 });
-
-const toPhoneInput = async () => {
-  await nextTick();
-  phoneInput.value = await loadPhoneInput(locale, refPhoneInput.value);
-}
 
 const login = () => {
   loging.value = true;
-  let prefix = phoneInput.value.getSelectedCountryData().dialCode;
-  setLocalData('prefix', prefix);
-
-  axios.post('/auth/login', {loginWith: userData.value.loginWith, email: userData.value.email, phone: prefix+userData.value.phone, password: userData.value.password})
+  //let prefix = phoneInput.value.getSelectedCountryData().dialCode;
+  setLocalData('prefix', userData.value.prefix);
+  axios.post('/auth/login', {loginWith: userData.value.loginWith, email: userData.value.email, phone: userData.value.prefix+userData.value.phone, password: userData.value.password, lang: lang.value})
     .then (async r => {
       loging.value = false;
       await nextTick();
@@ -55,7 +43,6 @@ const login = () => {
         setLocalData('authToken', JSON.stringify(r.data.accessToken));
         setLocalData('userData', JSON.stringify(r.data.userData));
         window.location = "/";
-        // router.push('/');
       }else{
         useAlerts().alert = {visible: true, message: r.data.message, class: 'alert-error'}
       }
@@ -83,11 +70,11 @@ const login = () => {
 </script>
 
 <template>
-  <ion-page>
+  <ion-page style="height: 100vh;">
     <ion-header>
       <ion-toolbar></ion-toolbar>
     </ion-header>
-    <ion-content class="ion-padding" v-bind="$attrs" :fullscreen="true" style="--background: var(--ion-color-bg)">
+    <ion-content class="ion-padding modal-scrollable" v-bind="$attrs" :fullscreen="true" style="--background: var(--ion-color-bg)">
       <div>
         <div class="ion-text-center logo">
           <img :src="VUE_ASSETS_URL + 'logo2.png'" :alt="APP_NAME" style="max-width: 180px;">
@@ -111,7 +98,8 @@ const login = () => {
         <div v-if="userData.loginWith == 'phone'">
           
           <div class="input" style="margin-top: 35px;"> 
-            <input id="phone" ref="refPhoneInput" :placeholder="$t('phone')" type="tel" autocomplete="off" v-model="userData.phone" @keydown="emailPhoneError = ''" />
+            <Phone :phone="itemData.phone" :prefix="itemData.prefix" />
+            <!-- <input id="phone" ref="refPhoneInput" :placeholder="$t('phone')" type="tel" autocomplete="off" v-model="userData.phone" @keydown="emailPhoneError = ''" /> -->
           </div>
         </div>
 
@@ -161,8 +149,9 @@ const login = () => {
 </template>
 
 <style scoped>
+  .modal-scrollable { overflow-y:auto; --overflow: auto;}
+
   #phone {color: var(--ion-color-primary) !important; font-size: 20px; border: none !important; background: transparent;outline: none; font-weight: normal;}
-  ion-footer {position: fixed;bottom: 20px;}
   ion-input {text-align:center;}
   ion-checkbox {
     --size: 22px;

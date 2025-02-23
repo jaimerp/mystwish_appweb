@@ -20,10 +20,15 @@ const toRegister = () => {
 
 <template>
   <ion-page>
+    <ion-header>
+      <ion-toolbar>
+        <div class="ion-text-center logo">
+          <ion-img :src="VUE_ASSETS_URL+'logo.png'" :alt="APP_NAME" style="max-width: 200px; height: auto;" />
+        </div>
+      </ion-toolbar>
+    </ion-header>
+
     <ion-content :fullscreen="true" class="ion-padding" style="background-color: var(--ion-color-primary);" v-bind="$attrs">
-      <div class="ion-text-center logo">
-        <img :src="VUE_ASSETS_URL+'logo.png'" :alt="APP_NAME" style="max-width: 200px; height: auto;">
-      </div>
       <swiper
         ref="swiperRef"
         :modules="[Navigation, Pagination]"
@@ -117,7 +122,9 @@ const toRegister = () => {
   </ion-page>
 </template>
   
-  <style scoped>
+<style scoped>
+  ion-header ion-toolbar {--background: var(--ion-color-primary) !important;background: var(--ion-color-primary) !important;}
+  ion-header ion-toolbar .ios {padding-top: 30px;}
   .slide-content {
     display: flex;
     flex-direction: column;
@@ -129,6 +136,6 @@ const toRegister = () => {
   }
   .box{position:fixed; bottom: 0;right:15px;left:15px;}
   .logo {
-    display: flex; justify-content: center; align-items: center; height: 55vh;
+    display: flex; justify-content: center; align-items: center;
   }
-  </style>
+</style>
