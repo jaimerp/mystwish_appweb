@@ -48,11 +48,6 @@ onMounted(async() => {
     userData.value.pass_confirm = '';
     userData.value.policy = 0;
   }
-  if (step.value === 2) {
-    // await nextTick();
-    // const input = document.querySelector("#phone");
-    // phoneInput.value = await loadPhoneInput(locale, input);
-  }
 });
 
 const saveDataTemp = () => {
@@ -173,19 +168,18 @@ const save = () => {
           <ion-text class="m17" style="margin-left: 15px;flex: 1;">{{ $t('register.gender.neutral') }}</ion-text>
         </div>
       </div>
-      <div v-if="step == 2">
-        <div class="ion-text-center" style="margin-top: 150px;">
+      <div v-if="step == 2" class="vertical-center">
+        <div class="ion-text-center">
           <ion-text class="s26">{{ $t('register.phone.title') }}</ion-text>
         </div>
 
         <div class="input" style="margin-top: 25px;">
-          <Phone :phone="userData.phone" :prefix="userData.prefix" />
-          <!-- <input id="phone" type="tel" autocomplete="off" v-model="userData.phone" /> -->
+          <Phone v-model:phone="userData.phone"  v-model:prefix="userData.prefix" />
           <ion-loading class="custom-loading" :message="$t('register.phone.sending')" spinner="circles" :is-open="sendingPhoneCode" ></ion-loading>
         </div>
       </div>
-      <div v-if="step == 3">
-        <div class="ion-text-center" style="margin-top: 150px;">
+      <div v-if="step == 3" class="vertical-center">
+        <div class="ion-text-center">
           <ion-text class="s26">{{ $t('register.phonecode.title') }}</ion-text>
         </div>
         <div class="ion-text-center" style="margin-top: 10px;">

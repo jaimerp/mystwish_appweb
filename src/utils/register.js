@@ -1,27 +1,3 @@
-// const setupIntlTelInput = async (lang, input) => {
-//     try {
-//       const { [lang]: i18n } = await import(`intl-tel-input/i18n`);
-//       return intlTelInput(input, {
-//         i18n,
-//         nationalMode: true,
-//         separateDialCode: true,
-//         initialCountry: "auto",
-//         strictMode: true,
-//         geoIpLookup: function (success, failure) {
-//           fetch("https://ipapi.co/json")
-//             .then((res) => res.json())
-//             .then((data) => success(data.country_code))
-//             .catch(() => failure());
-//         },
-//         loadUtils: () => import("intl-tel-input/utils"),
-//       });
-
-
-//     } catch (error) {
-//       console.error(`Error al cargar las traducciones para ${lang}:`, error);
-//     }
-// };
-
 export const validateRegisterData = (userData) => {
   return {
     name: userData.name != '', 

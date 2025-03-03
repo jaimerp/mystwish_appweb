@@ -5,6 +5,7 @@ import { getLocalData, setLocalData } from '@/utils/localdata';
 import { useI18n } from 'vue-i18n';
 import axios from '@/plugins/axios.js';
 import { useAlerts } from '@/store/alerts.js'
+import Phone from '@/views/components/Phone.vue'
 
 const { locale } = useI18n();
 const router = useRouter();
@@ -72,14 +73,15 @@ const login = () => {
 <template>
   <ion-page style="height: 100vh;">
     <ion-header>
-      <ion-toolbar></ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding modal-scrollable" v-bind="$attrs" :fullscreen="true" style="--background: var(--ion-color-bg)">
-      <div>
+      <ion-toolbar>
         <div class="ion-text-center logo">
-          <img :src="VUE_ASSETS_URL + 'logo2.png'" :alt="APP_NAME" style="max-width: 180px;">
+          <img :src="VUE_ASSETS_URL + 'logo2.png'" :alt="APP_NAME" style="max-width: 200px;">
         </div>
-        <div class="ion-text-center mt-8">
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding" v-bind="$attrs" :fullscreen="true" style="--background: var(--ion-color-bg)">
+      <div class="vertical-center">
+        <div class="ion-text-center">
           <ion-text class="s26">{{ $t('login.title') }}</ion-text>
         </div>
 
@@ -98,7 +100,7 @@ const login = () => {
         <div v-if="userData.loginWith == 'phone'">
           
           <div class="input" style="margin-top: 35px;"> 
-            <Phone :phone="itemData.phone" :prefix="itemData.prefix" />
+            <Phone :phone="userData.phone" :prefix="userData.prefix" />
             <!-- <input id="phone" ref="refPhoneInput" :placeholder="$t('phone')" type="tel" autocomplete="off" v-model="userData.phone" @keydown="emailPhoneError = ''" /> -->
           </div>
         </div>
@@ -127,20 +129,19 @@ const login = () => {
           <ion-text class="r12" style="color: var(--ion-color-primary);margin-left: 10px;">{{ $t('login.rememberme') }}</ion-text>
         </div>
 
-        <ion-text routerLink="/register" class="m13" style="display:block;text-align:center;margin-top:40px; color: var(--ion-color-primary); margin-left: 5px;">{{ $t('login.forgot_password') }}</ion-text>
-
-        <div class="list" style="justify-content: center; margin-top: 40px; margin-bottom: 20px;">
-          <ion-text class="r13" style="color: var(--ion-color-primary);">{{ $t('hasnot.account') }}</ion-text>
-          <ion-text routerLink="/auth/register" class="m13" style="color: var(--ion-color-primary); margin-left: 5px;">{{ $t('register') }}</ion-text>
-        </div>
+        <ion-text routerLink="/register" class="m13" style="display:block;text-align:center;margin-top:30px; color: var(--ion-color-primary); margin-left: 5px;">{{ $t('login.forgot_password') }}</ion-text>
 
         <ion-loading class="custom-loading" :message="$t('login.loging')" spinner="circles" :is-open="loging" ></ion-loading>
       </div>
     </ion-content>
 
     <ion-footer :translucent="false" style="box-shadow: none; background-color: var(--ion-color-bg);">
-      <ion-toolbar color="bg" style="padding: 10px 15px;--border-width: 0 0;">
-        <div class="ion-toolbar">
+      <ion-toolbar color="bg" style="--border-width: 0 0;padding-bottom:10px;">
+        <div class="d-flex pb-1" style="justify-content: center;">
+          <ion-text class="r13" style="color: var(--ion-color-primary);padding-bottom:0px !important">{{ $t('hasnot.account') }}</ion-text>
+          <ion-text routerLink="/auth/register" class="m13" style="color: var(--ion-color-primary); margin-left: 5px;padding-bottom:10px !important">{{ $t('register') }}</ion-text>
+        </div>
+        <div>
           <ion-button expand="block" :disabled="userData.emailphone == '' || userData.pass == ''" @click="login();">{{ $t('login') }}</ion-button>
         </div>
       </ion-toolbar>
@@ -149,6 +150,10 @@ const login = () => {
 </template>
 
 <style scoped>
+  .ios ion-header ion-toolbar {padding-top: 30px !important;}
+  .ios ion-footer ion-toolbar .ios {padding-bottom: 30px !important;}
+  .ion-toolbar {display:flex;align-items: center;}
+
   .modal-scrollable { overflow-y:auto; --overflow: auto;}
 
   #phone {color: var(--ion-color-primary) !important; font-size: 20px; border: none !important; background: transparent;outline: none; font-weight: normal;}
@@ -165,4 +170,11 @@ const login = () => {
 
   .chip-selected {border-width: 0;background-color: #fff;margin: 8px 0;height: 30px;}
   .chip-noselected-text {color: #404B52;}
+  .vertical-center 
+  {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
 </style>
