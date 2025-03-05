@@ -83,7 +83,7 @@ const geoIpLookup = (success, failure) => {
       type="tel" 
       placeholder="600 000 000" 
       v-model="phone" 
-      class="phone-input" 
+      class="phone-input"
       @input="updatePhone"
     />
   </ion-item>

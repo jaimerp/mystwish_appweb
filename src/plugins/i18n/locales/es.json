@@ -167,6 +167,9 @@
 
     "account.title": "Tu cuenta",
     "account.password.change": "Cambiar ontraseña",
+    "account.msg.saved": "Datos salvados",
+    "account.msg.error.missing": "El campo no puede estar vacío",
+    "account.msg.error.password": "La contraseña y la confirmación de la contraseña no coinciden",
 
     "o": "o"
 }

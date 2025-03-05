@@ -35,7 +35,6 @@ onMounted(async () => {
 const login = () => {
   loging.value = true;
   setLocalData('prefix', userData.value.prefix);
-  console.log(userData.value.prefix, userData.value.phone);
   axios.post('/auth/login', {loginWith: userData.value.loginWith, email: userData.value.email, phone: userData.value.prefix+userData.value.phone, password: userData.value.password, lang: lang.value})
     .then (async r => {
       loging.value = false;
@@ -60,7 +59,7 @@ const login = () => {
         useAlerts().alert = { 
           visible: true, 
           message: e.response && e.response.data.exception 
-            ? 'register.msg.error.general' 
+            ? e.response?.data?.message 
             : (e.response?.data?.message || 'register.msg.error.general '), 
           class: 'alert-error' 
         };
@@ -73,7 +72,7 @@ const login = () => {
 <template>
   <ion-page>
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar class="safe-header">
         <div class="ion-text-center logo">
           <img :src="VUE_ASSETS_URL + 'logo2.png'" :alt="APP_NAME" style="max-width: 200px;">
         </div>
@@ -149,10 +148,15 @@ const login = () => {
 </template>
 
 <style scoped>
-  .ios ion-header ion-toolbar {padding-top: 30px !important;}
-  .ios ion-footer ion-toolbar .ios {padding-bottom: 30px !important;}
+  ion-header ion-toolbar {padding-top: 30px !important;}
+  ion-footer ion-toolbar .ios {padding-bottom: 30px !important;}
   .ion-toolbar {display:flex;align-items: center;}
-
+  ion-header {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-header {
+    padding-top: env(safe-area-inset-top); /* Respeta el notch y la Dynamic Island */
+  }
   .modal-scrollable { overflow-y:auto; --overflow: auto;}
 
   ion-input {text-align:center;}

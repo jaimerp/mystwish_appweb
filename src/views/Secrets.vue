@@ -198,12 +198,12 @@ const confirmButtons = [
 
     <ion-modal
         :is-open="viewSecretModal"
-        css-class="rbsheet"
+        css-class="rbsheet safe-modal"
         @didDismiss="viewSecretModal=false"
     >
         <ion-content class="ion-padding modal-scrollable">
           <ion-loading class="custom-loading" :message="$t('saving')" spinner="circles" :is-open="updating" ></ion-loading>
-
+          <div class="safe-area-top<"></div>
           <div class="column ion-align-items-end">
               <ion-icon @click="viewSecretModal=false" icon="close-outline" style="font-size: 24px; color: var(--ion-color-primary);" />
           </div>
@@ -314,7 +314,15 @@ ion-toolbar { --background: var(--ion-color-primary);}
 .ios ion-header ion-toolbar {padding-top: 30px !important;}
 .ios ion-footer ion-toolbar .ios {padding-bottom: 30px !important;}
 .ion-toolbar {display:flex;align-items: center;}
+.safe-modal {
+  --offset-top: env(safe-area-inset-top);
+  margin-top: var(--offset-top);
+}
 
+.safe-area-top {
+  height: env(safe-area-inset-top);
+  width: 100%;
+}
 .modal-scrollable { overflow-y:auto; --overflow: auto;}
 ion-modal .ion-page { height: 100vh; height: 100%;}
 .grid {
