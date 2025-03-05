@@ -27,6 +27,7 @@ const destroyAlert = () => {
       :is-open="useAlerts().alert.visible"
       :class="useAlerts().alert.class"
       position="bottom"
+      swipe-gesture="vertical"
       :message="useAlerts().alert.message ? $t(useAlerts().alert.message) : ''"
       :duration="3000"
       @didDismiss="destroyAlert()"
