@@ -40,9 +40,13 @@ const hideMatchModal = () => {
 <template>
   <div>
     <ion-page class="ion-padding" v-if="!matchView && loading">
-      <div class="ion-text-center logo">
-        <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 180px;">
-      </div>
+      <ion-header>
+        <ion-toolbar>
+          <div class="ion-text-center logo">
+            <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 200px;">
+          </div>
+        </ion-toolbar>
+      </ion-header>
       <div class="box">
         <div class="spinner-inline loading">
           <ion-spinner name="crescent" color="primary"></ion-spinner>
@@ -51,7 +55,6 @@ const hideMatchModal = () => {
       </div>
     </ion-page>
     <ion-page v-if="!matchView && !loading">
-      <ion-header><ion-toolbar></ion-toolbar></ion-header>
       <ion-content>
         <ion-tabs :class="{ 'hide-tabs': tabsStore.hideTabs }">
           <ion-router-outlet></ion-router-outlet>

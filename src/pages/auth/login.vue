@@ -34,8 +34,8 @@ onMounted(async () => {
 
 const login = () => {
   loging.value = true;
-  //let prefix = phoneInput.value.getSelectedCountryData().dialCode;
   setLocalData('prefix', userData.value.prefix);
+  console.log(userData.value.prefix, userData.value.phone);
   axios.post('/auth/login', {loginWith: userData.value.loginWith, email: userData.value.email, phone: userData.value.prefix+userData.value.phone, password: userData.value.password, lang: lang.value})
     .then (async r => {
       loging.value = false;
@@ -71,7 +71,7 @@ const login = () => {
 </script>
 
 <template>
-  <ion-page style="height: 100vh;">
+  <ion-page>
     <ion-header>
       <ion-toolbar>
         <div class="ion-text-center logo">
@@ -79,7 +79,7 @@ const login = () => {
         </div>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="ion-padding" v-bind="$attrs" :fullscreen="true" style="--background: var(--ion-color-bg)">
+    <ion-content class="ion-padding" v-bind="$attrs" style="--background: var(--ion-color-bg)">
       <div class="vertical-center">
         <div class="ion-text-center">
           <ion-text class="s26">{{ $t('login.title') }}</ion-text>
@@ -100,8 +100,7 @@ const login = () => {
         <div v-if="userData.loginWith == 'phone'">
           
           <div class="input" style="margin-top: 35px;"> 
-            <Phone :phone="userData.phone" :prefix="userData.prefix" />
-            <!-- <input id="phone" ref="refPhoneInput" :placeholder="$t('phone')" type="tel" autocomplete="off" v-model="userData.phone" @keydown="emailPhoneError = ''" /> -->
+            <Phone v-model:phone="userData.phone"  v-model:prefix="userData.prefix" />
           </div>
         </div>
 
@@ -156,7 +155,6 @@ const login = () => {
 
   .modal-scrollable { overflow-y:auto; --overflow: auto;}
 
-  #phone {color: var(--ion-color-primary) !important; font-size: 20px; border: none !important; background: transparent;outline: none; font-weight: normal;}
   ion-input {text-align:center;}
   ion-checkbox {
     --size: 22px;

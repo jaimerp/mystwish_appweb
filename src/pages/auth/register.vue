@@ -23,6 +23,7 @@ const emailError = ref('');
 const passError = ref('');
 const policyError = ref('');
 const lang = ref();
+const sendedCode = ref(false);
 
 const userData = ref({
   gender: '',
@@ -68,7 +69,7 @@ const registerPhone = () => {
       }
     }).catch(e => {
       sendingPhoneCode.value = false;
-      useAlerts().alert = {visible: true, message: e.response.data.exception ? 'register.msg.error.general' : e.response.data.message, class: 'alert-error'}
+      useAlerts().alert = {visible: true, message: e.response?.data?.exception ? 'register.msg.error.general' : e.response?.data?.message, class: 'alert-error'}
       console.error(e)
     })
 }
@@ -81,6 +82,7 @@ const resendCode = () => {
       await nextTick();
       if (r.status == 200) {
         useAlerts().alert = {visible: true, message: 'register.phonecode.resend.msg', class: 'alert-success'}
+        sendedCode.value = true;
       }
     }).catch(e => {
       sendingPhoneCode.value = false;
@@ -130,7 +132,7 @@ const save = () => {
       registering.value = false;
       await nextTick();
       if (r.status == 200) {
-        // useAlerts().alert = {visible: true, message: 'register.register.ok', class: 'alert-success'}
+        useAlerts().alert = {visible: true, message: 'register.register.ok', class: 'alert-success'}
         step.value++;
       }
     }).catch(e => {
@@ -191,12 +193,12 @@ const save = () => {
           <ion-loading class="custom-loading" :message="$t('register.phonecode.checking')" spinner="circles" :is-open="checkingPhoneCode" ></ion-loading>
         </div>
         <div class="ion-text-center" style="margin-top: 30px;">
-          <ion-text class="r15" @click="resendCode">{{ $t('register.phonecode.resend.hint') }} {{ $t('register.phonecode.resend') }}</ion-text>
+          <ion-text class="r15" @click="resendCode" v-if="!sendedCode">{{ $t('register.phonecode.resend.hint') }} {{ $t('register.phonecode.resend') }}</ion-text>
         </div>
       </div>
 
-      <div v-if="step == 4">
-        <div class="ion-text-center" style="margin-top: 0px;">
+      <div v-if="step == 4" class="vertical-center">
+        <div class="ion-text-center">
           <ion-text class="s26">{{ $t('register.laststep.title') }}</ion-text>
         </div>
 
@@ -250,8 +252,8 @@ const save = () => {
           <ion-text class="r12" style="color: var(--ion-color-primary);margin-left: 10px;">{{ $t('register.newsletter') }} {{ APP_NAME }}</ion-text>
         </div>
       </div>
-      <div v-if="step == 5">
-        <div class="ion-text-center" style="margin-top: 150px;">
+      <div v-if="step == 5" class="vertical-center">
+        <div class="ion-text-center">
           <ion-text class="s26">{{ $t('register.registered.title') }}</ion-text>
         </div>
         <div class="ion-text-center" style="margin-top: 40px;">

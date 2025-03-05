@@ -66,9 +66,13 @@ const onModalDidPresent = () => {
 
 <template>
   <ion-page class="ion-padding" v-if="!newFanViewed">
-    <div class="ion-text-center logo">
-      <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 180px;">
-    </div>
+    <ion-header>
+        <ion-toolbar>
+          <div class="ion-text-center logo">
+            <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 200px;">
+          </div>
+        </ion-toolbar>
+      </ion-header>
     <div class="box">
       <div class="ion-text-center">
         <ion-text class="s26">{{ $t('fans.title') }}</ion-text>
@@ -168,6 +172,11 @@ const onModalDidPresent = () => {
 </template>
 
 <style scoped>
+ion-toolbar { --background: var(--ion-color-primary);}
+.ios ion-header ion-toolbar {padding-top: 30px !important;}
+.ios ion-footer ion-toolbar .ios {padding-bottom: 30px !important;}
+.ion-toolbar {display:flex;align-items: center;}
+
 .modal-scrollable { overflow-y: auto; --overflow: auto;}
 ion-modal .ion-page { height: 45% !important;}
 

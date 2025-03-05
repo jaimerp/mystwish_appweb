@@ -2,11 +2,11 @@
 import { useRouter } from 'vue-router';
 import { ref, onMounted, toRaw, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { loadPhoneInput } from '@/utils/register.js';
 import { useAlerts } from '@/store/alerts.js'
 import { getInitials } from '@/utils/utils.js';
 import Information from '@/views/components/Information.vue';
 import { useDataStore } from '@/store/data';
+import Phone from '@/views/components/Phone.vue'
 import axios from '@/plugins/axios.js';
 
 const { t } = useI18n();
@@ -19,7 +19,6 @@ const restNumSecrets = ref(null);
 const secrets = ref(dataStore.secrets);
 const viewSecretModal = ref(false);
 const secretToView = ref();
-const phoneInput = ref();
 const updating = ref(false);
 const confirmVisible = ref(false);
 const withHint = ref(false);
@@ -61,19 +60,12 @@ const editSecret = async(secret) => {
     }
     viewSecretModal.value = true;
 }
-const onModalDidPresent = async() => {
-    await nextTick();
-    const input = document.querySelector("#phone");
-    phoneInput.value = await loadPhoneInput(locale, input, secretToView.value != null);
-}
 
 const updateSecret = () => {
   updating.value = true;
   if (!withHint.value) secretData.value.hint = '';
   if (!withMessage.value) secretData.value.message = '';
   
-  secretData.value.prefix = phoneInput.value.getSelectedCountryData().dialCode;
-
   axios.post('/secrets/secret', secretData.value)
     .then (async r => {
       if (r.status == 200) {
@@ -131,9 +123,13 @@ const confirmButtons = [
 
 <template>
   <ion-page class="ion-padding">
-    <div class="ion-text-center logo">
-      <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 180px;">
-    </div>
+    <ion-header>
+        <ion-toolbar>
+          <div class="ion-text-center logo">
+            <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 200px;">
+          </div>
+        </ion-toolbar>
+      </ion-header>
     <div class="box">
       <div class="ion-text-center">
         <ion-text class="s26">{{ $t('secrets.title') }}</ion-text>
@@ -197,7 +193,6 @@ const confirmButtons = [
         handle-behavior="cycle"
         fullscreen="true"
         @didDismiss="viewSecretModal=false"
-        @didPresent="onModalDidPresent"
     >
         <ion-content class="ion-padding modal-scrollable">
           <ion-loading class="custom-loading" :message="$t('saving')" spinner="circles" :is-open="updating" ></ion-loading>
@@ -215,12 +210,11 @@ const confirmButtons = [
               label-placement="floating"
             />
           </div>
-          <div class="input mt-10"> 
-              <input id="phone" type="tel" autocomplete="off" :placeholder="$t('secrets.field.phone')"  v-model="secretData.phone" />
+          <div class="input mt-5"> 
+            <Phone v-model:phone="secretData.phone" v-model:prefix="secretData.prefix" />
           </div>
           <ion-text class="r13 mt-2 d-block" style="color:red;line-height: 16px !important;" v-if="secretToView!=null">{{ $t('secrets.field.phone.update.hint') }}</ion-text>
           <div class="mt-6">
-              <ion-text class="s16 d-block mb-2">{{ $t('secrets.field.type') }}</ion-text>
               <div class="scroll list">
                   <div class="chip pointer" :class="{ 'selected-secret-type': secretData.type === 'SEX' }" @click="secretData.type='SEX'">
                   <ion-text class="m12">{{ $t('secret.sex') }}</ion-text>
@@ -285,7 +279,7 @@ const confirmButtons = [
               />
           </div>
 
-          <div class="mt-10 d-flex pb-4"> 
+          <div class="mt-10 d-flex pb-4" style="margin-bottom:6rem"> 
               <ion-button shape="round" class="button-secondary button-delete mr-2" @click="confirmVisible=!confirmVisible" v-if="secretToView != null">
                 <ion-icon slot="icon-only" icon="trash-outline" class="m-2"></ion-icon>
               </ion-button>
@@ -302,7 +296,12 @@ const confirmButtons = [
   </ion-page>
 </template>
 
-<style>
+<style scoped>
+ion-toolbar { --background: var(--ion-color-primary);}
+.ios ion-header ion-toolbar {padding-top: 30px !important;}
+.ios ion-footer ion-toolbar .ios {padding-bottom: 30px !important;}
+.ion-toolbar {display:flex;align-items: center;}
+
 .modal-scrollable { overflow-y:auto; --overflow: auto;}
 ion-modal .ion-page { height: 88vh; height: 88%;}
 .grid {
@@ -379,14 +378,10 @@ ion-modal .ion-page { height: 88vh; height: 88%;}
     min-height: 1rem;
     height: 30px;
 }
-
-#phone {color: var(--ion-color-primary) !important; border: none !important; background: transparent;outline: none; font-weight: normal;}
-.iti__selected-dial-code {font-size: 16px;}
 .selected-secret-type {background-color: var(--ion-color-primary);}
   .selected-secret-type ion-text {color:#fff;}
   .chip ion-text{font-size: 14px;;}
   .chip {margin-right: 5px;}
-
 
   button.alert-button {
   color: #fff !important;

@@ -26,6 +26,19 @@ const updatePhone = (event) => {
   emit('update:phone', phone.value);
 };
 
+const customModalOptions = {
+  header: t('country'),
+  breakpoints: [0, 0.8],
+  initialBreakpoint: 0.8,
+  buttons: [
+    {
+      text: '',
+      icon: 'close',
+      role: 'cancel'
+    }
+  ]
+};
+
 onMounted(async () => {
   await geoIpLookup(
     (countryCode) => {
@@ -60,7 +73,6 @@ const geoIpLookup = (success, failure) => {
       :interface-options="customModalOptions"
       :selectedText="prefix"
       class="phone-input"
-      @ionChange="updatePrefix($event.detail.value)"
     >
       <ion-select-option v-for="item in countryPrefixes" :key="item.dialCode" :value="item.dialCode">
         {{ item.dialCode }} - {{ item.name }}
