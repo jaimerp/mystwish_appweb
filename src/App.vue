@@ -26,7 +26,7 @@ const destroyAlert = () => {
     <ion-toast
       :is-open="useAlerts().alert.visible"
       :class="useAlerts().alert.class"
-      position="top"
+      position="bottom"
       :message="useAlerts().alert.message ? $t(useAlerts().alert.message) : ''"
       :duration="3000"
       @didDismiss="destroyAlert()"
@@ -41,7 +41,6 @@ const destroyAlert = () => {
     --color: #fff;
     text-align: center;
   }
-
   ion-toast.alert-error {
     --background: #a9071a;
     --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);

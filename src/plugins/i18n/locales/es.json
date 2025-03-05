@@ -25,6 +25,7 @@
     "yes": "Si",
     "save": "Guardar",
     "country": "País",
+    "mandatory": "Campo obligatorio",
 
     "msg.form.error": "Error en el formulario",
     "msg.form.field.required": "Campo obligatorio",

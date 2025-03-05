@@ -33,6 +33,7 @@ const secretData = ref({
     message: '',
     notify: false,
 })
+const errors = ref([]);
 
 onMounted(() => {
   loadSecrets();
@@ -77,7 +78,17 @@ const updateSecret = () => {
       }
       updating.value = false;
     }).catch(e => {
-      useAlerts().alert = {visible: true, message: e.response.data.message, class: 'alert-error'}
+      errors.value = [];
+      if (e.response?.data?.errors){
+        const { errors: formErrors } = e.response.data
+        errors.value = Object.keys(formErrors).reduce((acc, key) => {
+          acc[key] = formErrors[key][0]; // Tomar solo el primer mensaje del array
+          return acc;
+        }, {});
+        useAlerts().alert = {visible: true, message: 'msg.form.error', class: 'alert-error'}
+      }else{
+        useAlerts().alert = {visible: true, message: e.response.data.message, class: 'alert-error'}
+      }
       updating.value = false;
     })
 }
@@ -123,7 +134,7 @@ const confirmButtons = [
 
 <template>
   <ion-page class="ion-padding">
-    <ion-header>
+    <ion-header id="header">
         <ion-toolbar>
           <div class="ion-text-center logo">
             <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 200px;">
@@ -188,10 +199,6 @@ const confirmButtons = [
     <ion-modal
         :is-open="viewSecretModal"
         css-class="rbsheet"
-        :initial-breakpoint="0.88"
-        :breakpoints="[0, 0.88]"
-        handle-behavior="cycle"
-        fullscreen="true"
         @didDismiss="viewSecretModal=false"
     >
         <ion-content class="ion-padding modal-scrollable">
@@ -210,9 +217,11 @@ const confirmButtons = [
               label-placement="floating"
             />
           </div>
+          <ion-text class="r12 error ml-2" v-if="errors?.name">{{ $t(errors.name) }}</ion-text>
           <div class="input mt-5"> 
             <Phone v-model:phone="secretData.phone" v-model:prefix="secretData.prefix" />
           </div>
+          <ion-text class="r12 error ml-2" v-if="errors?.phone">{{ $t(errors.phone) }}</ion-text>
           <ion-text class="r13 mt-2 d-block" style="color:red;line-height: 16px !important;" v-if="secretToView!=null">{{ $t('secrets.field.phone.update.hint') }}</ion-text>
           <div class="mt-6">
               <div class="scroll list">
@@ -223,7 +232,8 @@ const confirmButtons = [
                       <ion-text class="m12">{{ $t('secret.love') }}</ion-text>
                   </div>
               </div>
-          </div>
+              <ion-text class="r12 error ml-2" v-if="errors?.type">{{ $t(errors.type) }}</ion-text>
+            </div>
           <div class="mt-10">
               <ion-text class="s16 d-block mb-2">{{ $t('secrets.field.notify.title') }}</ion-text>
               <div class="scroll list mt-2">
@@ -279,7 +289,10 @@ const confirmButtons = [
               />
           </div>
 
-          <div class="mt-10 d-flex pb-4" style="margin-bottom:6rem"> 
+          <div class="mt-10 d-flex pb-4"> 
+              <ion-button shape="round" class="button-previous button-secondary mr-1" @click="viewSecretModal=false" style="padding-bottom:2px !important;">
+                <ion-icon slot="icon-only" icon="arrow-back" style="margin:30px;width: 75px;"/>
+              </ion-button>
               <ion-button shape="round" class="button-secondary button-delete mr-2" @click="confirmVisible=!confirmVisible" v-if="secretToView != null">
                 <ion-icon slot="icon-only" icon="trash-outline" class="m-2"></ion-icon>
               </ion-button>
@@ -303,11 +316,11 @@ ion-toolbar { --background: var(--ion-color-primary);}
 .ion-toolbar {display:flex;align-items: center;}
 
 .modal-scrollable { overflow-y:auto; --overflow: auto;}
-ion-modal .ion-page { height: 88vh; height: 88%;}
+ion-modal .ion-page { height: 100vh; height: 100%;}
 .grid {
   border-collapse: collapse;
 }
-
+.error { color: red;}
 .secret-container {
   border: 1px solid #ccc;
   display: flex;

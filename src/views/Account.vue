@@ -112,9 +112,6 @@ const saveAccount = () => {
         <ion-modal
             :is-open="viewAccountModal"
             css-class="rbsheet"
-            :initial-breakpoint="0.7"
-            :breakpoints="[0, 0.7]"
-            handle-behavior="cycle"
             fullscreen="true"
         >
             <ion-content class="ion-padding modal-scrollable">

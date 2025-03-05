@@ -1,101 +1,94 @@
 <template>
-    <div class="code-container">
-      <ion-input
-        v-for="(value, index) in code"
-        :key="index"
-        class="code-input"
-        type="text"
-        maxlength="1"
-        v-model="code[index]"
-        @input="onOtpChange(index, $event.target.value)"
-        @keydown.backspace="onBackspace(index)"
-        @paste="onPaste($event)"
-        autocomplete="off"
-      />
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref, nextTick, onMounted, defineEmits } from 'vue';
-  
-  const codeConfig = {
-    length: 4, // Número de dígitos
-  };
-  
-  const code = ref(new Array(codeConfig.length).fill(''));
-  
-  const emit = defineEmits(["updateCode"]);
-  
-  function updateCode(value) {
-    emit("updateCode", value);
+  <div class="code-container">
+    <ion-input
+      v-for="(value, index) in code"
+      :key="index"
+      class="code-input"
+      type="tel"
+      inputmode="numeric"
+      pattern="[0-9]*"
+      maxlength="1"
+      ref="inputRefs"
+      v-model="code[index]"
+      @input="onOtpChange(index, $event)"
+      @keydown.backspace="onBackspace(index)"
+      @paste="onPaste"
+      autocomplete="one-time-code"
+    />
+  </div>
+</template>
+
+<script setup>
+import { ref, nextTick, onMounted, defineEmits } from 'vue';
+
+const codeConfig = { length: 4 }; // Número de dígitos del código
+const code = ref(new Array(codeConfig.length).fill(''));
+const inputRefs = ref([]); // Referencias a los inputs
+const emit = defineEmits(["updateCode"]);
+
+// Emitir el código actualizado
+const updateCode = () => {
+  emit("updateCode", code.value.join(''));
+};
+
+// Manejar el cambio en cada input
+const onOtpChange = async (index, event) => {
+  const value = event.target.value.replace(/\D/g, ''); // Solo números
+  code.value[index] = value ? value[0] : ''; // Tomar solo el primer carácter
+
+  // Mover foco al siguiente input si hay un valor
+  if (value && index < codeConfig.length - 1) {
+    await nextTick();
+    inputRefs.value[index + 1]?.$el?.setFocus();
   }
-  
-  // Manejar cambios en el OTP
-  const onOtpChange = async (index, value) => {
-    if (value.length > 1) {
-      code.value[index] = value[0];
-    } else {
-      code.value[index] = value;
+
+  updateCode();
+};
+
+// Manejar la tecla "Backspace"
+const onBackspace = async (index) => {
+  if (code.value[index] === '' && index > 0) {
+    await nextTick();
+    inputRefs.value[index - 1]?.$el?.setFocus();
+  }
+  updateCode();
+};
+
+// Manejar eventos de pegar (paste)
+const onPaste = async (event) => {
+  event.preventDefault(); // Prevenir el comportamiento por defecto
+
+  const pasteData = event.clipboardData.getData('text').replace(/\D/g, ''); // Solo números
+  if (!pasteData) return;
+
+  const values = pasteData.slice(0, codeConfig.length).split(''); // Separar cada número
+  values.forEach((val, idx) => {
+    if (idx < codeConfig.length) {
+      code.value[idx] = val;
     }
-  
-    // Mover foco al siguiente input
-    if (value && index < codeConfig.length - 1) {
-      await nextTick();
-      const nextInput = document.querySelectorAll('.code-input')[index + 1];
-      nextInput?.setFocus();
-    }
-  
-    updateCode(code.value.join(''));
-  };
-  
-  // Manejar la tecla "Backspace"
-  const onBackspace = async (index) => {
-    if (code.value[index] === '' && index > 0) {
-      await nextTick();
-      const prevInput = document.querySelectorAll('.code-input')[index - 1];
-      prevInput?.setFocus();
-    }
-    updateCode(code.value.join(''));
-  };
-  
-  // Manejar eventos de pegar (paste)
-  const onPaste = async (event) => {
-    event.preventDefault(); // Prevenir el comportamiento por defecto
-    const pasteData = event.clipboardData.getData('text'); // Obtener los datos del portapapeles
-  
-    if (pasteData) {
-      const values = pasteData.slice(0, codeConfig.length).split(''); // Dividir los datos
-      values.forEach((val, idx) => {
-        if (idx < codeConfig.length) {
-          code.value[idx] = val;
-        }
-      });
-  
-      await nextTick();
-      const lastFilledIndex = Math.min(values.length, codeConfig.length) - 1;
-      const nextInput = document.querySelectorAll('.code-input')[lastFilledIndex];
-      nextInput?.setFocus(); // Mover foco al último input completado
-    }
-    updateCode(code.value.join(''));
-  };
-  
-  // Enfocar el primer input al cargar
-  onMounted(async () => {
-    await nextTick(); // Asegurarse de que los elementos estén en el DOM
-    const firstInput = document.querySelector('.code-input');
-    firstInput?.setFocus(); // Enfocar el primer input
   });
-  </script>
-  
-  <style scoped>
-  .code-container {
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    gap: 10px;
-  }
-  
-  .code-input {
+
+  await nextTick();
+  inputRefs.value[Math.min(values.length, codeConfig.length) - 1]?.$el?.setFocus();
+  updateCode();
+};
+
+// Enfocar el primer input al cargar
+onMounted(async () => {
+  await nextTick();
+  inputRefs.value[0]?.$el?.setFocus();
+});
+</script>
+
+<style scoped>
+.code-container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.code-input {
     width: 40px;
     height: 50px;
     text-align: center;
@@ -107,4 +100,4 @@
     --padding-end: 0;   /* Ionic padding reset */
     --color: var(--ion-color-primary);
   }
-  </style>
+</style>
