@@ -55,7 +55,7 @@
     "register.phonecode.subtitle": "Introduce el código que te hemos enviado al número ",
     "register.phonecode.resend.hint": "¿No has recibido el código?",
     "register.phonecode.resend": "Reenviar código",
-    "register.phonecode.resend.msg": "Código reenviado a tu móvil",
+    "register.phonecode.resend.msg": "Código reenviado a tu móvil", 
     "register.phonecode.error": "El código no es correcto",
     "register.phonecode.ok": "Teléfono validado",
     "register.phonecode.checking": "Comprobando el código",
@@ -67,6 +67,7 @@
     "register.registering": "Creando cuenta",
     "register.registered.title": "¡¡Cuenta creada!!",
     "register.registered.subtitle": "Ya puedes comenzar a lanzar likes secretos. Te guardaremos tus secretos, hasta que podamos desvelarlos.",
+    "register.ok": "Cuenta creada!!",
 
     "register.msg.error.missdata": "Faltan datos para continuar",
     "register.msg.error.general": "Error general, inténtalo más tarde o ponte en contacto con nosotros",

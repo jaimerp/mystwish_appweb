@@ -125,8 +125,8 @@ const onModalDidPresent = () => {
     <ion-modal
       :is-open="viewFanModal"
       css-class="rbsheet"
-      :initial-breakpoint="0.45"
-      :breakpoints="[0, 0.45]"
+      :initial-breakpoint="0.55"
+      :breakpoints="[0, 0.55]"
       handle-behavior="cycle"
       @didDismiss="viewFanModal=false"
       @didPresent="onModalDidPresent"
@@ -178,7 +178,7 @@ ion-toolbar { --background: var(--ion-color-primary);}
 .ion-toolbar {display:flex;align-items: center;}
 
 .modal-scrollable { overflow-y: auto; --overflow: auto;}
-ion-modal .ion-page { height: 45% !important;}
+ion-modal .ion-page { height: 55% !important; --height: 55hv;}
 
 .new-fan-container {--background: var(--ion-color-bg)}
 .grid {

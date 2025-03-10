@@ -132,7 +132,7 @@ const save = () => {
       registering.value = false;
       await nextTick();
       if (r.status == 200) {
-        useAlerts().alert = {visible: true, message: 'register.register.ok', class: 'alert-success'}
+        useAlerts().alert = {visible: true, message: 'register.ok', class: 'alert-success'}
         step.value++;
       }
     }).catch(e => {

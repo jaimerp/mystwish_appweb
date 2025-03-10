@@ -89,8 +89,8 @@ onMounted(async () => {
     <ion-modal
       :is-open="viewMatchModal"
       css-class="rbsheet"
-      :initial-breakpoint="0.50"
-      :breakpoints="[0, 0.50]"
+      :initial-breakpoint="0.55"
+      :breakpoints="[0, 0.55]"
       handle-behavior="cycle"
       @didDismiss="viewMatchModal=false"
     >
@@ -128,7 +128,7 @@ onMounted(async () => {
             </div>
           </div>
 
-          <div class="mt-8 mb-3 d-flex"> 
+          <div class="mt-8 d-flex" style="margin-bottom:4rem"> 
             <ion-button expand="block" style="width:100%" @click="viewMatchModal=false">{{ $t('ok') }}</ion-button>
           </div>
         </div>
@@ -145,7 +145,6 @@ ion-toolbar { --background: var(--ion-color-primary);}
 
 
 .modal-scrollable { overflow-y: auto; --overflow: auto;}
-ion-modal .ion-page { height: 50% !important;}
 
 .grid {
   border-collapse: collapse;

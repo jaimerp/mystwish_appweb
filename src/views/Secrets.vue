@@ -31,7 +31,7 @@ const secretData = ref({
     type: '',
     hint: '',
     message: '',
-    notify: false,
+    notify: true,
 })
 const errors = ref([]);
 
@@ -55,7 +55,7 @@ const editSecret = async(secret) => {
       else withMessage.value = true;
     }
     else {
-      secretData.value = {name: '',prefix: '',phone: '',type: '',hint: '', notify: false}
+      secretData.value = {name: '',prefix: '',phone: '',type: '',hint: '', notify: true}
       withHint.value = false;
       withMessage.value = false;
     }
@@ -70,7 +70,11 @@ const updateSecret = () => {
   axios.post('/secrets/secret', secretData.value)
     .then (async r => {
       if (r.status == 200) {
-        useAlerts().alert = {visible: true, message: r.data.message, class: 'alert-success'}
+        if (r.data.match){
+          window.location = "/app/secrets";
+        }else{
+          useAlerts().alert = {visible: true, message: r.data.message, class: 'alert-success'}
+        }
         await loadSecrets();
         viewSecretModal.value = false;
       }else{
