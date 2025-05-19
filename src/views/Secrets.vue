@@ -28,7 +28,7 @@ const secretData = ref({
     name: '',
     prefix: '',
     phone: '',
-    type: '',
+    type: 'sex',
     hint: '',
     message: '',
     notify: true,
@@ -55,7 +55,7 @@ const editSecret = async(secret) => {
       else withMessage.value = true;
     }
     else {
-      secretData.value = {name: '',prefix: '',phone: '',type: '',hint: '', notify: true}
+      secretData.value = {name: '',prefix: '',phone: '',type: 'SEX',hint: '', notify: true}
       withHint.value = false;
       withMessage.value = false;
     }
@@ -145,56 +145,57 @@ const confirmButtons = [
           </div>
         </ion-toolbar>
       </ion-header>
-    <div class="box">
-      <div class="ion-text-center">
-        <ion-text class="s26">{{ $t('secrets.title') }}</ion-text>
+    <div class="secrets-box page-scrollable">
+      <div class="mt-10">
+        <div class="d-flex ion-justify-content-between">
+          <ion-text class="s26 title">{{ $t('secrets.title') }}</ion-text>
+          <div class="d-flex flex-column">
+            <ion-text class="info-text">{{ secrets.length }} {{ $t('secrets.info') }}</ion-text>
+            <ion-text class="info-text2">{{ restNumSecrets }} {{ $t('secrets.info2') }}</ion-text>          
+          </div>
+        </div>
         <Information typeInfo="SECRETS" />
       </div>
-      <div class="ion-text-center mt-4">
+      <div class="ion-text-center mt-4 ion-page-grid">
         <ion-grid class="grid">
-            <ion-text class="s16">{{ $t('secrets.added') }}</ion-text>
-            <div v-if="secrets.length == 0">
-              <ion-text class="r12">{{ $t('secret.nothingadded') }}</ion-text>
-            </div>
-            <ion-row v-else>
-                <ion-col
-                size="6"
-                class="secret-container pointer"
-                v-for="(secret, index) in secrets"
-                :key="index"
-                @click="editSecret(secret)"
-                >
-                    <div class="icon-container">
-                        <ion-icon icon="heart-circle-outline" class="corner-icon" v-if="secret.type == 'LOVE'"></ion-icon>
-                        <ion-icon icon="flame-outline" class="corner-icon" v-if="secret.type == 'SEX'"></ion-icon>
-                    </div>
-                    <div class="grid-item">
-                        <div class="icon-user">
-                            <div class="question-icon">{{ getInitials(secret.name) }}</div>
-                            <ion-text class="s12">{{ secret.name }}</ion-text>
-                            <ion-text class="r12">{{ secret.phone }}</ion-text>
-                        </div>
-                    </div>
-                </ion-col>
-            </ion-row>
-            <ion-text class="s16 d-block mt-4">{{ $t('secrets.free') }}</ion-text>
-            <div v-if="secrets.length >= dataStore.numMaxSecrets">
-              <ion-text class="r12">{{ $t('secret.nothingfree') }}</ion-text>
-            </div>
-            <ion-row v-else>
-                <ion-col
-                size="6"
-                class="secret-container pointer"
-                v-for="index in restNumSecrets"
-                :key="index"
-                @click="editSecret(null)"
-                >
-                    <div class="grid-item">
-                        <div class="icon-user">
-                            <div class="question-icon">+</div>
-                        </div>
-                    </div>
-                </ion-col>
+          <ion-row class="grid-row">
+            <ion-col
+              class="secret-container pointer"
+              v-for="(secret, index) in secrets"
+              :key="'secret-' + index"
+              @click="editSecret(secret)"
+            >
+              <!-- <div class="icon-container">
+                <ion-icon icon="heart-circle-outline" class="corner-icon" v-if="secret.type == 'LOVE'"></ion-icon>
+                <ion-icon icon="flame-outline" class="corner-icon" v-if="secret.type == 'SEX'"></ion-icon>
+              </div> -->
+              <div class="grid-item">
+                <div class="icon-user d-flex flex-row">
+                  <!-- <div class="question-icon">{{ getInitials(secret.name) }}</div> -->
+                  <div class="key-container">
+                    <font-awesome-icon :icon="['fas', 'key']" style="font-size: 1.5rem; color: var(--ion-color-primary-shade)" />
+                  </div>
+                   <div class="d-flex flex-column">
+                    <ion-text class="s12">{{ secret.name.slice(0, 7) }} {{ secret.name.length > 7 ? '...' : '' }}</ion-text>
+                    <ion-text class="r12">{{ secret.phone }}</ion-text>
+                  </div>
+                </div>
+              </div>
+            </ion-col>
+
+            <ion-col
+              class="secret-container pointer"
+              v-for="index in restNumSecrets"
+              :key="'empty-' + index"
+              @click="editSecret(null)"
+              style="background-color: #2e3233 !important;"
+            >
+              <div class="grid-item">
+                <div class="icon-user">
+                  <font-awesome-icon :icon="['fas', 'plus']" style="font-size: 1.5rem; color: var(--ion-color-primary-shade)" />
+                </div>
+              </div>
+            </ion-col>
           </ion-row>
         </ion-grid>
       </div>
@@ -221,13 +222,14 @@ const confirmButtons = [
               label-placement="floating"
             />
           </div>
+          <ion-text class="r12 mt-2 d-block" style="line-height: 16px !important;">{{ $t('secrets.field.name.hint') }}</ion-text>
           <ion-text class="r12 error ml-2" v-if="errors?.name">{{ $t(errors.name) }}</ion-text>
           <div class="input mt-5"> 
             <Phone v-model:phone="secretData.phone" v-model:prefix="secretData.prefix" />
           </div>
           <ion-text class="r12 error ml-2" v-if="errors?.phone">{{ $t(errors.phone) }}</ion-text>
           <ion-text class="r13 mt-2 d-block" style="color:red;line-height: 16px !important;" v-if="secretToView!=null">{{ $t('secrets.field.phone.update.hint') }}</ion-text>
-          <div class="mt-6">
+          <!-- <div class="mt-6">
               <div class="scroll list">
                   <div class="chip pointer" :class="{ 'selected-secret-type': secretData.type === 'SEX' }" @click="secretData.type='SEX'">
                   <ion-text class="m12">{{ $t('secret.sex') }}</ion-text>
@@ -237,8 +239,8 @@ const confirmButtons = [
                   </div>
               </div>
               <ion-text class="r12 error ml-2" v-if="errors?.type">{{ $t(errors.type) }}</ion-text>
-            </div>
-          <div class="mt-10">
+            </div> -->
+          <!-- <div class="mt-10">
               <ion-text class="s16 d-block mb-2">{{ $t('secrets.field.notify.title') }}</ion-text>
               <div class="scroll list mt-2">
                   <div class="chip pointer" :class="{ 'selected-secret-type': secretData.notify }" @click="secretData.notify=true">
@@ -249,9 +251,9 @@ const confirmButtons = [
                   </div>
               </div>
               <ion-text class="r12 mt-2 d-block" style="line-height: 16px !important;">{{ $t('secrets.field.notify.hint') }}</ion-text>
-          </div>
+          </div> -->
 
-          <div class="mt-10" v-if="secretData.notify">
+          <div class="mt-6" v-if="secretData.notify">
               <ion-text class="s16 d-block mb-2">{{ $t('secrets.field.hint.title') }}</ion-text>
               <div class="scroll list mt-2">
                   <div class="chip pointer" :class="{ 'selected-secret-type': withHint }" @click="withHint=true">
@@ -263,16 +265,17 @@ const confirmButtons = [
               </div>
               <ion-text class="r12 mt-2 d-block" style="line-height: 16px !important;" v-if="!withHint">{{ $t('secrets.field.hint.hint') }}</ion-text>
           </div>
-          <div class="input mt-4 pt-0" style="height:100px;" v-if="withHint && secretData.notify"> 
+          <div class="input mt-4 pt-0" style="height:115px;padding-bottom: 10px;padding-top: 10px;" v-if="withHint && secretData.notify"> 
               <ion-textarea v-model="secretData.hint"
-              :counter="true"
-              maxlength="200"
-              :label="$t('secrets.field.hint')"
-              label-placement="floating"
+                :counter="true"
+                maxlength="200"
+                :label="$t('secrets.field.hint')"
+                label-placement="floating"
+                style=" font-size: 0.8rem !important;"
               />
           </div>
 
-          <div class="mt-10">
+          <div class="mt-6">
               <ion-text class="s16 d-block mb-2">{{ $t('secrets.field.message.title') }}</ion-text>
               <div class="scroll list mt-2">
                   <div class="chip pointer" :class="{ 'selected-secret-type': withMessage }" @click="withMessage=true">
@@ -284,21 +287,22 @@ const confirmButtons = [
               </div>
               <ion-text class="r12 mt-2 d-block" style="line-height: 16px !important;" v-if="!withMessage">{{ $t('secrets.field.message.hint') }}</ion-text>
           </div>
-          <div class="input mt-4 pt-0" style="height:100px;" v-if="withMessage"> 
+          <div class="input mt-4 pt-0" style="height:115px;padding-bottom: 10px;padding-top: 10px;" v-if="withMessage"> 
               <ion-textarea v-model="secretData.message"
-              :counter="true"
-              maxlength="200"
-              :label="$t('secrets.field.message')"
-              label-placement="floating"
+                :counter="true"
+                maxlength="200"
+                :label="$t('secrets.field.message')"
+                label-placement="floating"
+                style=" font-size: 0.8rem !important;"
               />
           </div>
 
           <div class="mt-10 d-flex pb-4"> 
-              <ion-button shape="round" class="button-previous button-secondary mr-1" @click="viewSecretModal=false" style="padding-bottom:2px !important;">
-                <ion-icon slot="icon-only" icon="arrow-back" style="margin:30px;width: 75px;"/>
+              <ion-button shape="round" class="button-previous button-secondary mr-2" @click="viewSecretModal=false" style="padding-bottom:2px !important;">
+                <ion-icon slot="icon-only" icon="arrow-back" style="margin:25px;width: 75px;"/>
               </ion-button>
               <ion-button shape="round" class="button-secondary button-delete mr-2" @click="confirmVisible=!confirmVisible" v-if="secretToView != null">
-                <ion-icon slot="icon-only" icon="trash-outline" class="m-2"></ion-icon>
+                <ion-icon slot="icon-only" icon="trash-outline" class="m-2" style="width:1.8rem;"></ion-icon>
               </ion-button>
               <ion-button expand="block" style="width:100%" @click="updateSecret">{{ secretToView == null ? $t('secret.button.new') : $t('secret.button.update') }}</ion-button>
           </div>
@@ -309,6 +313,7 @@ const confirmButtons = [
       :is-open="confirmVisible"
       :header="$t('secrets.confirm.delete.header')"
       :buttons="confirmButtons"
+      css-class="custom-alert"
     ></ion-alert>    
   </ion-page>
 </template>
@@ -329,17 +334,32 @@ ion-toolbar { --background: var(--ion-color-primary);}
 }
 .modal-scrollable { overflow-y:auto; --overflow: auto;}
 ion-modal .ion-page { height: 100vh; height: 100%;}
+
+.page-scrollable { overflow-y:auto; --overflow: auto;}
+.ion-page-grid { height: 100vh; height: 100%;}
+
+
+
 .grid {
   border-collapse: collapse;
 }
 .error { color: red;}
+.grid-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
 .secret-container {
-  border: 1px solid #ccc;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--ion-color-primary-back);
+  border-radius: 17px;
+  flex: 0 0 calc(50% - 8px);
+  max-width: calc(50% - 8px);
+  height: 4.5rem;
 }
-
 .grid-item {
   position: relative;
   text-align: center;
@@ -412,6 +432,40 @@ ion-modal .ion-page { height: 100vh; height: 100%;}
   color: #fff !important;
 }
 
+
+.custom-alert .alert-button {
+  --color: white;
+}
+ion-alert::part(button) {
+  color: white !important;
+}
 .pointer {cursor:pointer;}
 
+
+.title {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--ion-color-primary-contrast);
+}
+.info-text {
+  font-size: 0.8rem;
+  color: var(--ion-color-primary-shade);
+  margin-top: 2px;
+}
+.info-text2 {
+  font-size: 0.65rem;
+  color: var(--ion-color-primary-shade);
+  margin-top: 0px;
+  text-align: right;
+}
+
+.key-container {
+  width: 45px;
+  height: 45px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

@@ -16,6 +16,7 @@ import { arrowBack,
   pencilOutline,
   chevronForward,
   sadOutline,
+  shieldCheckmarkOutline,
  } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
@@ -37,5 +38,6 @@ addIcons({
   'trash-outline': trashOutline,
   'pencil-outline': pencilOutline,
   'chevron-forward': chevronForward,
-  'sad-outline': sadOutline
+  'sad-outline': sadOutline,
+  'shield-checkmark-outline': shieldCheckmarkOutline,
 });

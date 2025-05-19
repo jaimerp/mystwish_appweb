@@ -37,7 +37,7 @@ const $api = axios.create({
     return response
   }, error => {
     // Handle error
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
       // ℹ️ Logout user and redirect to login page
       // Remove "userData" from localStorage
       removeLocalData('userData', null)

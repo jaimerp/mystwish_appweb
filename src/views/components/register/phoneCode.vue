@@ -31,15 +31,26 @@ const updateCode = () => {
   emit("updateCode", code.value.join(''));
 };
 
-// Manejar el cambio en cada input
 const onOtpChange = async (index, event) => {
   const value = event.target.value.replace(/\D/g, ''); // Solo números
-  code.value[index] = value ? value[0] : ''; // Tomar solo el primer carácter
 
-  // Mover foco al siguiente input si hay un valor
-  if (value && index < codeConfig.length - 1) {
+  if (value.length > 1) {
+    // Si el valor tiene más de un dígito (ej: viene todo el código de golpe)
+    const values = value.slice(0, codeConfig.length).split('');
+    values.forEach((val, idx) => {
+      code.value[idx] = val;
+    });
+
     await nextTick();
-    inputRefs.value[index + 1]?.$el?.setFocus();
+    inputRefs.value[Math.min(values.length, codeConfig.length) - 1]?.$el?.setFocus();
+  } else {
+    // Si es un solo dígito, comportamiento normal
+    code.value[index] = value ? value[0] : '';
+
+    if (value && index < codeConfig.length - 1) {
+      await nextTick();
+      inputRefs.value[index + 1]?.$el?.setFocus();
+    }
   }
 
   updateCode();

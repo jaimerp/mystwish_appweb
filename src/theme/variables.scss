@@ -190,9 +190,13 @@
 	--ion-color-primary-rgb: 18,18,18;
 	--ion-color-primary-contrast: #FFFFFF;
 	--ion-color-primary-contrast-rgb: 0,0,0;
-	--ion-color-primary-shade: #333333;
+	--ion-color-primary-shade: #848484;
+	--ion-color-primary-back: #eeeeed;
+	--ion-color-primary-back2: #8b8a8f;
 	--ion-color-primary-tint: #121212;
+	--ion-color-primary-tint2: #2f3130;
 
+	--ion-color-text-white: #FFFFFF;
     
   }
 
@@ -202,10 +206,10 @@
    */
 
   .ios body {
-    --ion-background-color: #121212;
+    --ion-background-color: --ion-color-primary;
     --ion-background-color-rgb: 0,0,0;
 
-    --ion-text-color: #ffffff;
+    --ion-text-color: --ion-color-primary-contrast;
     --ion-text-color-rgb: 255,255,255;
 
     --ion-color-step-50: #0d0d0d;

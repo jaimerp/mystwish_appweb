@@ -16,7 +16,7 @@ const validateEmail = (email) => {
   return true;  
 }
 
-const validatePassword = (password) => {
+export const validatePassword = (password) => {
   const passPattern = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
   if (!passPattern.test(password)) {
     return false;

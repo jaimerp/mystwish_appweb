@@ -16,14 +16,14 @@ onMounted(async() => {
   await dataStore.loadData()
 
   if (dataStore.matchs?.find(match => match.new === true)){
-    tabsStore.hiddenTabs();
+    // tabsStore.showTabs();
     matchView.value = true;
   }
   loading.value = false;
 });
 
 const hideMatchModal = () => {
-  tabsStore.showTabs();
+  // tabsStore.showTabs();
   matchView.value = false;
   try{
     axios.post('/secrets/no-newmatch')
@@ -56,34 +56,35 @@ const hideMatchModal = () => {
     </ion-page>
     <ion-page v-if="!matchView && !loading">
       <ion-content>
-        <ion-tabs :class="{ 'hide-tabs': tabsStore.hideTabs }">
+        <ion-tabs>  
+          <!-- :class="{ 'hide-tabs': tabsStore.hideTabs }" -->
           <ion-router-outlet></ion-router-outlet>
           <ion-tab-bar slot="bottom">
             <ion-tab-button tab="fans" href="/app/fans">
-                <ion-icon icon="heart-half-outline" size="10" />
-                {{ $t('tabs.fans') }}
+                <font-awesome-icon :icon="['fas', 'heart']" size="3x" />
+                <!-- {{ $t('tabs.fans') }} -->
                 <ion-badge v-if="dataStore.fans?.length > 0">{{ dataStore.fans?.length }}</ion-badge>
             </ion-tab-button>
             <ion-tab-button tab="secrets" href="/app/secrets">
-                <ion-icon icon="heart-outline" size="10" />
-                {{ $t('tabs.secrets') }}
+                <font-awesome-icon :icon="['fas', 'key']" size="3x" />
+                <!-- {{ $t('tabs.secrets') }} -->
                 <ion-badge v-if="dataStore.secrets?.length > 0">{{ dataStore.secrets?.length }}</ion-badge>
             </ion-tab-button>
             <ion-tab-button tab="matchs" href="/app/matchs">
-                <ion-icon icon="heart-half-outline" size="10" />
-                {{ $t('tabs.matchs') }}
+                <font-awesome-icon :icon="['fas', 'fire-flame-curved']" size="3x" />
+                <!-- {{ $t('tabs.matchs') }} -->
                 <ion-badge v-if="dataStore.matchs?.length > 0">{{ dataStore.matchs?.length }}</ion-badge>
             </ion-tab-button>
             <ion-tab-button tab="account" href="/app/account">
-                <ion-icon icon="person-circle-outline" size="10" />
-                {{ $t('tabs.account') }}
+                <font-awesome-icon :icon="['fas', 'user']" size="3x" />
+                <!-- {{ $t('tabs.account') }} -->
             </ion-tab-button>
           </ion-tab-bar>
         </ion-tabs>
       </ion-content>
     </ion-page>
     <ion-page v-if="matchView && !loading">
-      <ion-content class="ion-padding new-match-container">
+      <ion-content class="ion-padding">
         <NewMatch @done="() => (hideMatchModal())" />
       </ion-content>
     </ion-page>
@@ -119,26 +120,21 @@ ion-tabs{
 }
 
 ion-tab-bar  {
-    background: #121212;
+    background: #121212 !important;
     width: 98% !important;
     border-radius: 20px;
     margin: 5px 0px 5px 1% !important;
-    max-height: 56px;
     height: 65px;
     max-height: 65px;
     border: unset;
 }
 
-.tab-selected ion-icon{
-    color: #121212;
-}
-
 ion-tab-button {
-    background: white;
+    /* background: white;
     -webkit-box-shadow: 5px 5px 15px -15px  rgba(0,0,0,0.4);
     -moz-box-shadow: 5px 5px 15px -15px  rgba(0,0,0,0.4);
     box-shadow: 5px 5px 15px -15px  rgba(0,0,0,0.4);
-    --border: none;
+    --border: none; */
 }
 
 ion-tab-button:hover {
@@ -149,13 +145,13 @@ ion-tab-button:hover {
 }
 
 ion-badge {
-    --background: #121212;
+    --background: #c02678;
     --color: white;
     width: 23px;
     height: 21px;
     font-size: 0.8rem;
-    margin-top: -8px;
-    padding-top: 4px;
+    padding-top: 3px;
+    margin-top: 1px;
 }
 
 ion-tab-button > ion-icon:after {

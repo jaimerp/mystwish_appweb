@@ -13,7 +13,8 @@ const { locale } = useI18n();
 const router = useRouter();
 const APP_NAME = process.env.VUE_APP_NAME;
 const VUE_ASSETS_URL = process.env.VUE_APP_ASSETS_URL;
-const step = ref(1);
+const VUE_WEB_URL = process.env.VUE_APP_WEB_URL;
+const step = ref(4);
 const sendingPhoneCode = ref(false);
 const checkingPhoneCode = ref(false);
 const registering = ref(false);
@@ -100,7 +101,7 @@ const checkPhoneCode = () => {
       await nextTick();
       if (r.status == 200) {
         useAlerts().alert = {visible: true, message: 'register.phonecode.ok', class: 'alert-success'}
-        step.value++;
+        step.value = 4;
       }
     }).catch(e => {
       checkingPhoneCode.value = false;
@@ -111,13 +112,14 @@ const checkPhoneCode = () => {
 
 const registerUser = () => {
   let validation = validateRegisterData(userData.value);
-  if (validation.name === true && validation.email === true && validation.pass === true && validation.pass_confirm === true && validation.policy === true){
+  if (validation.name === true && validation.pass === true && validation.pass_confirm === true && validation.policy === true){
+    //&& validation.email === true
     save();
 //
   }else{
     useAlerts().alert = {visible: true, message: 'msg.form.error', class: 'alert-error'}
     if (!validation.name) nameError.value = 'msg.form.field.required';
-    if (!validation.email) emailError.value = 'register.msg.error.form.email';
+    // if (!validation.email) emailError.value = 'register.msg.error.form.email';
     if (!validation.pass) passError.value = 'register.msg.error.form.pass';
     if (!validation.pass_confirm) passError.value = 'register.msg.error.form.pass_confirm';
     if (!validation.policy) policyError.value = 'register.msg.error.form.policy';
@@ -181,6 +183,9 @@ const save = () => {
         </div>
       </div>
       <div v-if="step == 3" class="vertical-center">
+        <!-- <div class="ion-text-center">
+          <ion-icon slot="icon-only" icon="shield-checkmark-outline" class="shield-icon"></ion-icon>
+        </div> -->
         <div class="ion-text-center">
           <ion-text class="s26">{{ $t('register.phonecode.title') }}</ion-text>
         </div>
@@ -210,14 +215,14 @@ const save = () => {
         </div>
         <ion-text class="r12 txt_error" v-if="nameError != ''">{{ $t(nameError) }}</ion-text>
 
-        <div class="input" style="margin-top: 25px;padding-bottom:13px;"> 
+        <!-- <div class="input" style="margin-top: 25px;padding-bottom:13px;"> 
           <ion-input type="email" style="flex:1;" v-model="userData.email" @keydown="emailError = ''"
             :label="$t('email')"
             label-placement="floating"
           />
         </div>
         <ion-text class="r12 txt_error" v-if="emailError != ''">{{ $t(emailError) }}</ion-text>
-
+ -->
         <div class="input" style="margin-top: 25px;padding-bottom:8px;"> 
           <ion-input
             style="flex:1;"
@@ -226,6 +231,7 @@ const save = () => {
             :label="$t('password')"
             label-placement="floating"
             type="password"
+            :placeholder="$t('password')"
           >
             <ion-input-password-toggle slot="end"></ion-input-password-toggle>
           </ion-input>
@@ -236,18 +242,28 @@ const save = () => {
           <ion-input type="password" style="flex:1;" v-model="userData.pass_confirm" @keydown="passError = ''"
             :label="$t('register.password.confirm')"
             label-placement="floating"
+            :placeholder="$t('register.password.confirm')"
           >
             <ion-input-password-toggle slot="end"></ion-input-password-toggle>
           </ion-input>
         </div>
         <ion-loading class="custom-loading" :message="$t('register.registering')" spinner="circles" :is-open="registering" ></ion-loading>
 
-        <div  class="list" style="margin-top: 25px;margin-bottom: 10px;">
+        <div  class="list" style="margin-top: 25px;margin-bottom: 10px; margin-left: 0.5rem">
           <ion-checkbox v-model="userData.policy" @click="policyError = ''"></ion-checkbox>
-          <ion-text class="r12" style="color: var(--ion-color-primary);margin-left: 10px;">{{ $t('register.policy') }}</ion-text>
+          <ion-text class="r12" style="color: var(--ion-color-primary); margin-left: 10px;">
+            {{ $t('register.policy') }}&nbsp;
+            <a :href="VUE_WEB_URL+'/conditions'" target="_blank" style="text-decoration: underline; color: inherit;">
+              {{ $t('register.policy.conditions') }}
+            </a>
+            &nbsp;{{ $t('register.policy.and') }}&nbsp;
+            <a :href="VUE_WEB_URL+'/legal'" target="_blank" style="text-decoration: underline; color: inherit;">
+              {{ $t('register.policy.legal') }}
+            </a>
+          </ion-text>
         </div>
         <ion-text class="r12 txt_error" v-if="policyError != ''">{{ $t(policyError) }}</ion-text>
-        <div  class="list" style="margin-top: 25px;margin-bottom: 10px;">
+        <div  class="list" style="margin-top: 15px;margin-bottom: 10px; margin-left: 0.5rem">
           <ion-checkbox v-model="userData.newsletter" @click="policyError = ''"></ion-checkbox>
           <ion-text class="r12" style="color: var(--ion-color-primary);margin-left: 10px;">{{ $t('register.newsletter') }} {{ APP_NAME }}</ion-text>
         </div>
@@ -321,4 +337,11 @@ const save = () => {
     justify-content: center;
     height: 100%;
   }
+  .shield-icon{
+    font-size: 50px;
+    margin-bottom: 20px;
+    color: var(--ion-color-primary);
+  }
+  ion-input-password-toggle {margin-top: -15px;}
+  .txt_error {margin-top:5px; margin-left: 5px;}
 </style>

@@ -45,15 +45,62 @@ onMounted(async () => {
           </div>
         </ion-toolbar>
       </ion-header>
-    <div class="box">
-      <div class="ion-text-center">
-        <ion-text class="s26">{{ $t('matchs.page.title') }}</ion-text>
+      <div class="match-box">
+      <div class="mt-10" v-if="matchs.length > 0">
+        <div class="d-flex ion-justify-content-between">
+          <ion-text class="s26 title">{{ $t('matchs.page.title') }}</ion-text>
+          <div class="d-flex flex-column">
+            <ion-text class="info-text" v-if="matchs.length == 1"> {{ $t('matchs.info') }}</ion-text>
+            <ion-text class="info-text" v-if="matchs.length > 1"> {{ $t('matchs.info2', {count: matchs.length}) }}</ion-text>
+          </div>
+        </div>
         <Information typeInfo="MATCHS" />
       </div>
+
       <div v-if="!matchsLoaded" class="spinner-inline loading">
         <ion-spinner name="crescent" color="primary"></ion-spinner>
         <ion-text class="s12">{{ $t('matchs.page.loading') }}</ion-text>
       </div>        
+      <div class="ion-text-center" style="margin-top: 15px;" v-else>
+        <ion-grid class="grid" v-if="matchs.length > 0">
+          <ion-row>
+            <ion-col
+              size="6"
+              class="match-container pointer"
+              v-for="(match, index) in matchs"
+              :key="index"
+              @click="viewMatch(match)"
+            >
+                <div class="grid-item">
+                  <div class="d-flex flex-row">
+                    <div class="icon-container">
+                      <font-awesome-icon :icon="['fas', 'fire-flame-curved']" style="font-size: 1.7rem; color: white" />
+                    </div>
+                    <div class="d-flex flex-column ml-3" style="justify-content: flex-end">
+                      <ion-text class="s12 d-block white">{{ match.name.slice(0, 7) }} {{ match.name.length > 7 ? '...' : '' }}</ion-text>
+                      <ion-text class="r12 d-block white">{{ match.phone }}</ion-text>
+                    </div>
+                  </div>
+                </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      <!-- <div class="match-box">
+        <div class="mt-10" v-if="matchs.length > 0">
+          <div class="d-flex ion-justify-content-between">
+            <ion-text class="s26 title">{{ $t('matchs.page.title') }}</ion-text>
+            <div class="d-flex flex-column">
+              <ion-text class="info-text" v-if="matchs.length == 1"> {{ $t('fans.info') }}</ion-text>
+              <ion-text class="info-text" v-if="matchs.length > 1"> {{ $t('fans.info2', {count: fans.length}) }}</ion-text>
+            </div>
+          </div>
+          <Information typeInfo="MATCHS" />
+        </div>
+        <div v-if="!fansLoaded" class="spinner-inline loading">
+          <ion-spinner name="crescent" color="primary"></ion-spinner>
+          <ion-text class="s12">{{ $t('matchs.page.loading') }}</ion-text>
+        </div>        
       <div class="ion-text-center" style="margin-top: 15px;" v-else>
         <ion-grid class="grid" v-if="matchs.length > 0">
           <ion-row>
@@ -77,10 +124,15 @@ onMounted(async () => {
                 </div>
             </ion-col>
           </ion-row>
-        </ion-grid>
-        <div v-else class="ion-text-center">
-          <ion-icon slot="icon-only" icon="sad-outline" class="ion-align-self-center ion-display-block icon-nothing"></ion-icon>
-          <ion-text class="s16 ion-display-block">{{ $t('matchs.page.no') }}</ion-text>
+        </ion-grid> -->
+        <div class="no-match-content" v-else>
+          <div class="no-match-wrapper">
+            <font-awesome-icon :icon="['fas', 'fa-fire-extinguisher']" class="icon-heart" />
+            <ion-text class="text-match-no-title ion-display-block mt-10">{{ $t('match.no1') }}</ion-text>
+            <ion-text class="text-match-no-title ion-display-block mt-2">{{ $t('match.no1.2') }}</ion-text>
+            <ion-text class="text-match-no-subtitle ion-display-block mt-8">{{ $t('match.no2') }}</ion-text>
+            <ion-text class="text-match-no-subtitle ion-display-block mt-3">{{ $t('match.no3') }}</ion-text>
+          </div>
         </div>
       </div>
     </div>
@@ -105,18 +157,18 @@ onMounted(async () => {
           </div>
 
           <div class="flex-grow">
-            <div class="mt-8 d-flex">
+            <!-- <div class="mt-8 d-flex">
               <div class="chip selected-match-type" v-if="matchData.type === 'SEX'">
                 <ion-text class="m12">{{ $t('matchs.page.sex') }}</ion-text>
               </div>
               <div class="chip selected-match-type" v-if="matchData.type === 'LOVE'">
                 <ion-text class="m12">{{ $t('matchs.page.love') }}</ion-text>
               </div>
-            </div>
+            </div> -->
             <div class="mt-4">
               <ion-text class="s16 mt-2 d-block">{{ $t('matchs.page.data.title') }}:</ion-text>
               <ion-text class="r16 d-block">{{ matchData.name }}</ion-text>
-              <ion-text class="r16 d-block">{{ matchData.phone }}</ion-text>
+              <ion-text class="r16 d-block">+{{ matchData.prefix }} {{ matchData.phone }}</ion-text>
             </div>
             <div class="mt-8">
               <ion-text class="s16 mt-2 d-block">{{ $t('matchs.page.field.hint') }}:</ion-text>
@@ -156,7 +208,15 @@ ion-toolbar { --background: var(--ion-color-primary);}
   justify-content: center;
   align-items: center;
 }
-
+.icon-container{
+  width: 45px;
+  height: 45px;
+  background-color: #97969b;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .grid-item {
   position: relative;
   text-align: center;
@@ -166,14 +226,6 @@ ion-toolbar { --background: var(--ion-color-primary);}
 .flag-image {
   display: block;
   margin: 0 auto;
-}
-
-.icon-container {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  z-index: 10;
-  cursor: pointer;
 }
 
 .corner-icon {
@@ -237,4 +289,76 @@ ion-toolbar { --background: var(--ion-color-primary);}
 }
 .pointer {cursor:pointer;}
 
+.match-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--ion-color-primary-back2);
+  border-radius: 17px;
+  flex: 0 0 calc(50% - 8px);
+  max-width: calc(50% - 8px);
+  height: 4.5rem;
+}
+
+.no-match-content {
+  --background: var(--ion-color-primary-back);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+}
+
+.no-match-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 75%;
+}
+.no-match-wrapper ion-text {
+  color: var(--ion-color-text-white);
+}
+.text-match-no-title {
+  font-size: 2.2rem;
+  line-height: 100%;;
+  font-weight: bold;
+}
+.text-match-no-subtitle {
+  font-size: 1.1rem;
+  font-weight: lighter;
+}
+.icon-heart {
+  font-size: 12rem; color: var(--ion-color-primary-tint2)
+}
+
+@media (max-height: 700px) {
+  .icon-heart {
+    font-size: 7rem;
+  }
+  .text-match-no-subtitle {
+    font-size: 0.9rem;
+  }
+  .text-match-no-title {
+    font-size: 1.5rem;
+  }
+}
+.title {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--ion-color-primary-contrast);
+}
+.info-text {
+  font-size: 0.8rem;
+  color: var(--ion-color-primary-shade);
+  margin-top: 10px;
+}
+.unknown-text {
+  font-size: 0.9rem;
+  color: var(--ion-color-primary);
+  font-weight: bold;
+
+}
+.white {
+  color: white !important;
+}
 </style>

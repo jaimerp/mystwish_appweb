@@ -84,7 +84,7 @@ const login = () => {
           <ion-text class="s26">{{ $t('login.title') }}</ion-text>
         </div>
 
-        <div class="column" style="align-items: center;margin-top: 40px;">
+        <!-- <div class="column" style="align-items: center;margin-top: 40px;">
           <ion-text class="s12" style="display:block; text-align:center;margin-bottom:5px;">{{ $t('login.select') }}</ion-text>
           <div class="chip list" style="height: 39px;border-width: 0;background-color: #F1F4F8;padding: 0 10px;">
             <div style="margin: 0 20px;" :class="{'chip chip-selected': userData.loginWith == 'phone'}" @click="userData.loginWith = 'phone'">
@@ -93,8 +93,8 @@ const login = () => {
             <div style="margin: 0 20px;" :class="{'chip chip-selected': userData.loginWith == 'email'}" @click="userData.loginWith = 'email'">
               <ion-text :class="{'b13': userData.loginWith == 'email', 'r13 chip-selected-text': userData.loginWith == 'phone'}">{{ $t('email') }}</ion-text>
             </div>
-         </div>
-        </div>
+          </div>
+        </div> -->
 
         <div v-if="userData.loginWith == 'phone'">
           
@@ -103,7 +103,7 @@ const login = () => {
           </div>
         </div>
 
-        <div v-if="userData.loginWith == 'email'">
+        <!-- <div v-if="userData.loginWith == 'email'">
           <div class="input" style="margin-top: 35px;padding-bottom:13px;"> 
             <ion-input style="flex:1;" v-model="userData.email" @keydown="emailPhoneError = ''"
               :label="$t('email')"
@@ -111,7 +111,7 @@ const login = () => {
             />
           </div>
         </div>
-        <ion-text class="r12 txt_error" v-if="emailPhoneError != ''">{{ $t(emailPhoneError) }}</ion-text>
+        <ion-text class="r12 txt_error" v-if="emailPhoneError != ''">{{ $t(emailPhoneError) }}</ion-text> -->
 
         <div class="input" style="margin-top: 35px;"> 
           <ion-input type="password" style="flex:1;" v-model="userData.password" @keydown="passError = ''"

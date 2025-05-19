@@ -40,15 +40,17 @@ const customModalOptions = {
 };
 
 onMounted(async () => {
-  await geoIpLookup(
-    (countryCode) => {
-      const defaultPrefix = countryPrefixes.find((item) => item.code === countryCode)?.dialCode;
-      updatePrefix(defaultPrefix);
-    },
-    () => {
-      updatePrefix(countryPrefixes.find((item) => item.code === 'ES')?.dialCode);
-    }
-  );
+  if (!props.prefix){
+    await geoIpLookup(
+      (countryCode) => {
+        const defaultPrefix = countryPrefixes.find((item) => item.code === countryCode)?.dialCode;
+        updatePrefix(defaultPrefix);
+      },
+      () => {
+        updatePrefix(countryPrefixes.find((item) => item.code === 'ES')?.dialCode);
+      }
+    );
+  }
 });
 
 const geoIpLookup = (success, failure) => {

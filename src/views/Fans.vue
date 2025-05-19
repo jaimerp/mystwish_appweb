@@ -67,17 +67,24 @@ const onModalDidPresent = () => {
 <template>
   <ion-page class="ion-padding" v-if="!newFanViewed">
     <ion-header>
-        <ion-toolbar>
-          <div class="ion-text-center logo">
-            <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 200px;">
+      <ion-toolbar>
+        <div class="ion-text-center logo">
+          <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 200px;">
+        </div>
+      </ion-toolbar>
+    </ion-header>
+    <div class="fans-box">
+      <div class="mt-10" v-if="fans.length > 0">
+        <div class="d-flex ion-justify-content-between">
+          <ion-text class="s26 title">{{ $t('fans.title') }}</ion-text>
+          <div class="d-flex flex-column">
+            <ion-text class="info-text" v-if="fans.length == 1"> {{ $t('fans.info') }}</ion-text>
+            <ion-text class="info-text" v-if="fans.length > 1"> {{ $t('fans.info2', {count: fans.length}) }}</ion-text>
           </div>
-        </ion-toolbar>
-      </ion-header>
-    <div class="box">
-      <div class="ion-text-center">
-        <ion-text class="s26">{{ $t('fans.title') }}</ion-text>
+        </div>
         <Information typeInfo="FANS" />
       </div>
+
       <div v-if="!fansLoaded" class="spinner-inline loading">
         <ion-spinner name="crescent" color="primary"></ion-spinner>
         <ion-text class="s12">{{ $t('fans.loading') }}</ion-text>
@@ -87,36 +94,53 @@ const onModalDidPresent = () => {
           <ion-row>
             <ion-col
               size="6"
-              class="flag-container pointer"
+              class="fan-container pointer"
               v-for="(fan, index) in fans"
               :key="index"
                @click="viewFan(fan)"
             >
-                <div class="icon-container">
+                <!-- <div class="icon-container">
                     <ion-icon icon="heart-circle-outline" class="corner-icon" v-if="fan.type == 'LOVE'"></ion-icon>
                     <ion-icon icon="flame-outline" class="corner-icon" v-if="fan.type == 'SEX'"></ion-icon>
-                    <!-- <div
+                    <div
                     v-if="tooltipVisible === index"
                     class="tooltip"
                     >
                         <span v-if="fan.type == 'LOVE'">{{ $t('fans.type.love') }}</span>
                         <span v-if="fan.type == 'SEX'">{{ $t('fans.type.sex') }}</span>
-                    </div> -->
-                </div>
-                <div class="grid-item">
-                    <div class="icon-user">
-                        <div class="question-icon">?</div>
                     </div>
-                    <ion-button fill="outline" class="button-small" @click.stop="viewFan(fan)" style="display:block;margin-top:15px;">
-                      {{ $t('fans.viewhint') }}
-                    </ion-button>
+                </div> -->
+                <div class="grid-item">
+                    <!-- <div class="icon-user">
+                        <div class="question-icon">?</div>
+                    </div> -->
+                    <div class="d-flex ion-justify-content-between">
+                      <div class="heart-container">
+                        <font-awesome-icon :icon="['fas', 'heart']" style="font-size: 1.5rem; color: var(--ion-color-primary-shade)" />
+                      </div>
+                      <div class="d-flex ion-align-items-end ml-5">
+                        <span class="unknown-text">?????</span>
+                      </div>
+                      <!-- <div class="d-flex">
+                        <ion-text class="s12" style="text-align:right;">Ver</ion-text>
+                        <ion-button fill="outline" class="button-small" @click.stop="viewFan(fan)" style="display:block;margin-top:15px;">
+                          {{ $t('fans.viewhint') }}
+                        </ion-button>
+                      </div> -->
+                    </div>
+
                 </div>
             </ion-col>
           </ion-row>
         </ion-grid>
-        <div v-else class="ion-text-center">
-          <ion-icon slot="icon-only" icon="sad-outline" class="ion-align-self-center ion-display-block icon-nothing"></ion-icon>
-          <ion-text class="s16 ion-display-block">{{ $t('fans.no') }}</ion-text>
+        <div class="no-fans-content" v-else>
+          <div class="no-fans-wrapper">
+            <font-awesome-icon :icon="['fas', 'heart-circle-xmark']" class="icon-heart" />
+            <ion-text class="text-fans-no-title ion-display-block mt-10">{{ $t('fans.no1') }}</ion-text>
+            <ion-text class="text-fans-no-title ion-display-block mt-2">{{ $t('fans.no1.2') }}</ion-text>
+            <ion-text class="text-fans-no-subtitle ion-display-block mt-8">{{ $t('fans.no2') }}</ion-text>
+            <ion-text class="text-fans-no-subtitle ion-display-block mt-3">{{ $t('fans.no3') }}</ion-text>
+          </div>
         </div>
       </div>
     </div>
@@ -125,42 +149,39 @@ const onModalDidPresent = () => {
     <ion-modal
       :is-open="viewFanModal"
       css-class="rbsheet"
-      :initial-breakpoint="0.55"
-      :breakpoints="[0, 0.55]"
+      :initial-breakpoint="0.45"
+      :breakpoints="[0, 0.45]"
       handle-behavior="cycle"
       @didDismiss="viewFanModal=false"
       @didPresent="onModalDidPresent"
     >
       <ion-content class="ion-padding modal-scrollable">
-        <div ref="divRef">
-          <div class="column" style="align-items: flex-end;">
+        <div ref="divRef" class="modal-container">
+          <div class="top">
             <ion-icon @click="viewFanModal=false" icon="close-outline" style="font-size: 24px; color: var(--ion-color-primary);" />
           </div>
 
-          <div class="ion-text-center" style="margin-top: 0px;">
-            <ion-text class="m19">{{ $t('fans.hint.title') }}</ion-text>
-          </div>
-
-          <div class="flex-grow">
-            <div class="mt-8 d-flex">
-              <ion-text class="s16 mt-2 mr-2">{{ $t('fans.field.type') }}</ion-text>
-              <div class="chip selected-fan-type" v-if="fanData.type === 'SEX'">
-                <ion-text class="m12">{{ $t('fans.sex') }}</ion-text>
-              </div>
-              <div class="chip selected-fan-type" v-if="fanData.type === 'LOVE'">
-                <ion-text class="m12">{{ $t('fans.love') }}</ion-text>
-              </div>
+          <div class="middle">
+            <div class="ion-text-center" style="margin-top: 0px;">
+              <ion-text class="m19">{{ $t('fans.hint.title') }}</ion-text>
             </div>
-            <div class="mt-8">
-              <ion-text class="s16 mt-2 d-block">{{ $t('fans.field.hint') }}:</ion-text>
-              <ion-text class="r16 d-block mt-2">{{ fanData.hint }}</ion-text>
+
+            <div class="flex-grow" style="height:80%; align-content: center;">
+              <div v-if="fanData.hint">
+                <ion-text class="s16 mt-2 d-block">{{ $t('fans.field.hint') }}:</ion-text>
+                <ion-text class="r15 d-block mt-2">{{ fanData.hint }}</ion-text>
+              </div>
+              <div class="flex-grow mt-4" v-else>
+                <ion-text class="r16">{{ $t('fans.hint.no') }}</ion-text>
+              </div>
             </div>
           </div>
 
-          <div class="mt-8 mb-3 d-flex"> 
+          <div class="bottom">
             <ion-button expand="block" style="width:100%" @click="viewFanModal=false">{{ $t('ok') }}</ion-button>
           </div>
         </div>
+
       </ion-content>
     </ion-modal>
   </ion-page>
@@ -180,16 +201,19 @@ ion-toolbar { --background: var(--ion-color-primary);}
 .modal-scrollable { overflow-y: auto; --overflow: auto;}
 ion-modal .ion-page { height: 55% !important; --height: 55hv;}
 
-.new-fan-container {--background: var(--ion-color-bg)}
 .grid {
   border-collapse: collapse;
 }
 
-.flag-container {
-  border: 1px solid #ccc; /* Bordes de las celdas */
+.fan-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--ion-color-primary-back);
+  border-radius: 17px;
+  flex: 0 0 calc(50% - 8px);
+  max-width: calc(50% - 8px);
+  height: 4.5rem;
 }
 
 .grid-item {
@@ -269,7 +293,98 @@ ion-modal .ion-page { height: 55% !important; --height: 55hv;}
     justify-items: center;
     display: flex;
     flex-direction: column;
+    background-color: var(--ion-color-primary-back);
 }
 .pointer {cursor:pointer;}
+.heart-container {
+  width: 45px;
+  height: 45px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.title {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--ion-color-primary-contrast);
+}
+.info-text {
+  font-size: 0.8rem;
+  color: var(--ion-color-primary-shade);
+  margin-top: 10px;
+}
+.unknown-text {
+  font-size: 0.9rem;
+  color: var(--ion-color-primary);
+  font-weight: bold;
+
+}
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  height: 45%;
+}
+
+.modal-container .top {
+  flex-shrink: 0;
+  align-items: flex-end;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-container .middle {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px 0;
+}
+
+.modal-container .bottom {
+  flex-shrink: 0;
+  margin-bottom: 20px;
+}
+.no-fans-content {
+  --background: var(--ion-color-primary-back);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+}
+
+.no-fans-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 75%;
+}
+.no-fans-wrapper ion-text {
+  color: var(--ion-color-text-white);
+}
+.text-fans-no-title {
+  font-size: 2.2rem;
+  line-height: 100%;;
+  font-weight: bold;
+}
+.text-fans-no-subtitle {
+  font-size: 1.1rem;
+  font-weight: lighter;
+}
+.icon-heart {
+  font-size: 12rem; color: var(--ion-color-primary-tint2)
+}
+
+@media (max-height: 700px) {
+  .icon-heart {
+    font-size: 7rem;
+  }
+  .text-fans-no-subtitle {
+    font-size: 0.9rem;
+  }
+  .text-fans-no-title {
+    font-size: 1.5rem;
+  }
+}
 
 </style>

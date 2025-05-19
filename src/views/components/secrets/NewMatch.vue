@@ -23,37 +23,44 @@ const done = () => {
   <template>
     <div class="container">
       <div class="logo">
-        <ion-img :src="VUE_ASSETS_URL + 'logo2.png'" :alt="APP_NAME" class="logo-image" />
+        <ion-img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" class="logo-image" />
       </div>
   
-      <div class="content">
-        <div class="ion-text-center">
-          <ion-text class="s26">{{ $t('match.title') }}</ion-text>
+      <div class="d-flex flex-column modal">
+        <div class="box d-flex flex-column">
+          <div class="top">
+            <ion-icon @click="done()" icon="close-outline" style="font-size: 24px; color: var(--ion-color-primary);" />
+          </div>
+          <div class="content">
+            <div class="ion-text-center">
+              <ion-text class="s26 title" style="line-height: 100%;">{{ $t('match.title') }}</ion-text>
+            </div>
+      
+            <font-awesome-icon :icon="['fas', 'fire-flame-curved']" class="mt-5 icon-heart" />
+      
+            <div class="ion-text-center">
+              <ion-text class="r16 mt-5 d-block text2">{{ $t('match.subtitle') }}</ion-text>
+            </div>
+            <div class="ion-text-center mt-4">
+              <ion-button @click="done()" expand="block">
+                {{ $t('ok') }}
+              </ion-button>
+            </div>
+          </div>
         </div>
-  
-        <div class="mt-2">
-          <img :src="VUE_ASSETS_URL + 'imgs/icons/heart-alert.svg'" class="icon-image" />
-        </div>
-
-        <div class="ion-text-center">
-          <ion-text class="r15 d-block">{{ $t('match.subtitle') }}</ion-text>
-        </div>
-      </div>
-  
-      <div class="footer">
-        <ion-button @click="done()" expand="block">
-          {{ $t('ok') }}
-        </ion-button>
-      </div>
+      </div> 
     </div>
   </template>
   
   <style scoped>
+  .box {
+    background-color: var(--ion-color-primary-back);
+  }
   .container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100vh;
+    height: 95vh;
     padding: 20px;
   }
   
@@ -72,13 +79,18 @@ const done = () => {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    flex-grow: 1;
     text-align: center;
+    padding: 1rem 1.5rem;
+  }
+  .top {
+    flex-shrink: 0;
+    align-items: flex-end;
+    display: flex;
+    justify-content: flex-end;
   }
 
   .icon-image {
-    width: 90%;
+    height: 40%;
     margin-top: 30px;
   }
   
@@ -86,5 +98,31 @@ const done = () => {
     justify-content: center;
     align-items: center;
     margin-bottom: 1rem;
+  }
+  .arrow {
+    width: 120px;
+    margin-top:-1px;
+    margin-left: -3%;
+  }
+  .icon-heart {
+    font-size: 12rem; color: var(--ion-color-primary);
+  }
+  .modal {
+    flex-grow: 1;
+    display: flex;
+    align-items: center; /* centrado vertical */
+    justify-content: center; /* centrado horizontal */
+  }
+
+  @media (max-height: 700px) {
+    .icon-heart {
+      font-size: 6.5rem;
+    }
+    .text2 {
+      font-size: 0.9rem;
+    }
+    .title {
+      font-size: 1.5rem;
+    }
   }
   </style>

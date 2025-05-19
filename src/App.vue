@@ -37,7 +37,7 @@ const destroyAlert = () => {
 
 <style scoped>
   ion-toast.alert-success {
-    --background: #34ca00;
+    --background: #017d2a;
     --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
     --color: #fff;
     text-align: center;

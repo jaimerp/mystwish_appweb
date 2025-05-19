@@ -16,6 +16,14 @@ import { IonicVue } from '@ionic/vue';
 // Importa la configuración de los iconos
 import '@/plugins/ionicons';
 
+// Fuente awesome
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+import { faFireFlameCurved, faKey, faHeart, faUser, faPlus, faHeartCircleXmark, faFireExtinguisher } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faFireFlameCurved, faKey, faHeart, faUser, faPlus, faHeartCircleXmark, faFireExtinguisher)
+
 const app = createApp(App);
 const ability = new Ability();
 
@@ -29,3 +37,6 @@ app.provide('ability', ability);
 registerIonicComponents(app);
 
 app.mount('#app');
+
+// Registra el componente globalmente
+app.component('font-awesome-icon', FontAwesomeIcon)
