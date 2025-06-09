@@ -127,7 +127,7 @@ const login = () => {
           <ion-text class="r12" style="color: var(--ion-color-primary);margin-left: 10px;">{{ $t('login.rememberme') }}</ion-text>
         </div>
 
-        <ion-text routerLink="/register" class="m13" style="display:block;text-align:center;margin-top:30px; color: var(--ion-color-primary); margin-left: 5px;">{{ $t('login.forgot_password') }}</ion-text>
+        <ion-text routerLink="/auth/recoverpass" class="m13" style="display:block;text-align:center;margin-top:30px; color: var(--ion-color-primary); margin-left: 5px;">{{ $t('login.forgot_password') }}</ion-text>
 
         <ion-loading class="custom-loading" :message="$t('login.loging')" spinner="circles" :is-open="loging" ></ion-loading>
       </div>

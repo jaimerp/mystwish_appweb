@@ -8,6 +8,14 @@ export const validateRegisterData = (userData) => {
   };
 }
 
+export const validateRecoverPass = (phoneCode, password, confirmPass) => {
+  return {
+    password: validatePassword(password), 
+    confirmPass: confirmPass == password,
+    phoneCode: phoneCode.length == 4,
+  };
+}
+
 const validateEmail = (email) => {
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailPattern.test(email)) {

@@ -14,7 +14,7 @@ const router = useRouter();
 const APP_NAME = process.env.VUE_APP_NAME;
 const VUE_ASSETS_URL = process.env.VUE_APP_ASSETS_URL;
 const VUE_WEB_URL = process.env.VUE_APP_WEB_URL;
-const step = ref(4);
+const step = ref(1);
 const sendingPhoneCode = ref(false);
 const checkingPhoneCode = ref(false);
 const registering = ref(false);
@@ -253,7 +253,7 @@ const save = () => {
           <ion-checkbox v-model="userData.policy" @click="policyError = ''"></ion-checkbox>
           <ion-text class="r12" style="color: var(--ion-color-primary); margin-left: 10px;">
             {{ $t('register.policy') }}&nbsp;
-            <a :href="VUE_WEB_URL+'/conditions'" target="_blank" style="text-decoration: underline; color: inherit;">
+            <a :href="VUE_WEB_URL+'/condiciones'" target="_blank" style="text-decoration: underline; color: inherit;">
               {{ $t('register.policy.conditions') }}
             </a>
             &nbsp;{{ $t('register.policy.and') }}&nbsp;

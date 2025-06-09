@@ -16,7 +16,7 @@
     "saving": "Guardando datos...",
     "error.general": "Error inesperado. Inténtalo más tarde.",
     "gender": "Genero",
-    "newsletter": "Recibir notificaciones e información de Mystwish",
+    "newsletter": "Recibir notificaciones e información de Misthery",
     "loading": "Cargando...",
     "man": "Hombre",
     "woman": "Mujer",
@@ -26,6 +26,7 @@
     "save": "Guardar",
     "country": "País",
     "mandatory": "Campo obligatorio",
+    "or": "o",
 
     "msg.form.error": "Error en el formulario",
     "msg.form.field.required": "Campo obligatorio",
@@ -94,6 +95,13 @@
     "login.data.invalid": "Debe ser un email o un teléfono válido",
     "login.user.inactive": "Este usuario ha sido desactivado",
     "login.user.incorrect": "Datos de acceso incorrectos",
+
+    "recoverpass.title": "Recuperar contraseña",
+    "recoverpass.subtitle1": "Introduce el teléfono con el que te registraste",
+    "recoverpass.msg.error.missdata": "Faltan datos para continuar",
+    "recoverpass.phonecode": "Introduce el código de 4 dígitos que te hemos enviado al teléfono",
+    "recoverpass.success": "Contraseña actualizada correctamente",
+    "register.recovering": "Actualizando contraseña",
 
     "tabs.secrets": "Mis secretos",
     "tabs.fans": "Le gustas",
