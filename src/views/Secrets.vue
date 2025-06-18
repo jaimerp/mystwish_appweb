@@ -333,11 +333,20 @@ ion-toolbar { --background: var(--ion-color-primary);}
   width: 100%;
 }
 .modal-scrollable { overflow-y:auto; --overflow: auto;}
+.modal-scrollable::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
 ion-modal .ion-page { height: 100vh; height: 100%;}
 
 .page-scrollable { overflow-y:auto; --overflow: auto;}
 .ion-page-grid { height: 100vh; height: 100%;}
 
+.page-scrollable::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
 
 
 .grid {

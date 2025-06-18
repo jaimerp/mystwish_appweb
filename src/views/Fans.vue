@@ -73,7 +73,7 @@ const onModalDidPresent = () => {
         </div>
       </ion-toolbar>
     </ion-header>
-    <div class="fans-box">
+    <div class="fans-box page-scrollable">
       <div class="mt-10" v-if="fans.length > 0">
         <div class="d-flex ion-justify-content-between">
           <ion-text class="s26 title">{{ $t('fans.title') }}</ion-text>
@@ -89,9 +89,9 @@ const onModalDidPresent = () => {
         <ion-spinner name="crescent" color="primary"></ion-spinner>
         <ion-text class="s12">{{ $t('fans.loading') }}</ion-text>
       </div>        
-      <div class="ion-text-center" style="margin-top: 15px;" v-else>
+      <div class="ion-text-center ion-page-grid" style="margin-top: 15px;" v-else>
         <ion-grid class="grid" v-if="fans.length > 0">
-          <ion-row>
+          <ion-row class="grid-row">
             <ion-col
               size="6"
               class="fan-container pointer"
@@ -200,9 +200,20 @@ ion-toolbar { --background: var(--ion-color-primary);}
 
 .modal-scrollable { overflow-y: auto; --overflow: auto;}
 ion-modal .ion-page { height: 55% !important; --height: 55hv;}
+.page-scrollable { overflow-y:auto; --overflow: auto;}
+.ion-page-grid { height: 60vh; height: 60%;}
+.page-scrollable::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
 
 .grid {
   border-collapse: collapse;
+}
+.grid-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .fan-container {
@@ -211,8 +222,8 @@ ion-modal .ion-page { height: 55% !important; --height: 55hv;}
   align-items: center;
   background-color: var(--ion-color-primary-back);
   border-radius: 17px;
-  flex: 0 0 calc(50% - 8px);
-  max-width: calc(50% - 8px);
+  flex: 0 0 calc(50% - 8px) !important;
+  max-width: calc(50% - 8px) !important;
   height: 4.5rem;
 }
 

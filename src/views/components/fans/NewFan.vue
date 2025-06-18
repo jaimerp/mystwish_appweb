@@ -48,6 +48,12 @@ const done = () => {
   <style scoped>
   .box {
     background-color: var(--ion-color-primary-back);
+    overflow-y: auto;
+    max-height: calc(100vh - 100px); 
+  }
+  .box::-webkit-scrollbar {
+    width: 0;
+    height: 0;
   }
   .container {
     display: flex;
@@ -61,7 +67,7 @@ const done = () => {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
   
   .logo-image {
     max-width: 200px;
@@ -102,7 +108,10 @@ const done = () => {
   }
   .modal {
       margin-bottom: 7%;
-    }
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+  }
 
   @media (max-height: 700px) {
     .icon-heart {
