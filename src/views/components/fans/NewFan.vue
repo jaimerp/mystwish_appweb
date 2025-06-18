@@ -49,8 +49,12 @@ const done = () => {
   .box {
     background-color: var(--ion-color-primary-back);
     overflow-y: auto;
-    max-height: calc(100vh - 100px); 
+    /* max-height: calc(100vh - 100px);  */
+    max-height: 80vh;
+    margin: 0 auto;
+    border-radius: 1.5rem;    
   }
+
   .box::-webkit-scrollbar {
     width: 0;
     height: 0;
@@ -59,7 +63,8 @@ const done = () => {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 95vh;
+    /* height: 95vh; */
+    min-height: 100%;
     padding: 20px;
   }
   
@@ -107,7 +112,9 @@ const done = () => {
     font-size: 12rem; color: var(--ion-color-primary);
   }
   .modal {
-      margin-bottom: 7%;
+      /* margin-bottom: 7%; */
+      margin-top: auto;
+      margin-bottom: auto;
       display: flex;
       flex-direction: column;
       overflow: hidden;

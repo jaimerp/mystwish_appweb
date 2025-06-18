@@ -81,26 +81,44 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const isAuthRoute = to.path.startsWith('/auth/');
-  const intro = await introViewed();
-  if (to.path == '/lang') next();
-  else{
-    if (!await isAuthenticated()) {
-      if (isAuthRoute) {
-        if (to.path == '/auth/intro' && intro) next('/auth/login');
-        else next();
-      } else {
-        if (!await hasLang()) next('/lang');
-        else if (intro == true) next('/auth/login');
-        else next('/auth/intro');
-      }
-    } else {
-      if (isAuthRoute) {
-        next('/');
+  const lang = await getLocalData('lang');
+  const intro = await getLocalData('intro');
+  const token = await getLocalData('authToken');
+
+  if (to.path === '/lang') {
+    next(); // siempre dejar pasar a /lang
+    return;
+  }
+
+  if (!lang) {
+    next('/lang');
+    return;
+  }
+  if (!token || token === 'null' || token === 'undefined') {
+    // NO está logueado
+    if (isAuthRoute) {
+      // puede seguir navegando dentro de /auth/*
+      if (to.path === '/auth/intro' && intro) {
+        next('/auth/login');
       } else {
         next();
       }
+    } else {
+      // No puede acceder a rutas protegidas sin login
+      if (!intro) {
+        next('/auth/intro');
+      } else {
+        next('/auth/login');
+      }
+    }
+  } else {
+    // SÍ está logueado
+    if (isAuthRoute) {
+      next('/'); // Evita volver al login
+    } else {
+      next();
     }
   }
 });

@@ -28,7 +28,7 @@ const toRegister = () => {
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true" class="ion-padding" style="background-color: var(--ion-color-primary);" v-bind="$attrs">
+    <ion-content :fullscreen="true" class="ion-padding content-bg" v-bind="$attrs">
       <swiper
         ref="swiperRef"
         :modules="[Navigation, Pagination]"
@@ -123,7 +123,10 @@ const toRegister = () => {
 </template>
   
 <style scoped>
-  ion-header ion-toolbar {--background: var(--ion-color-primary) !important;background: var(--ion-color-primary) !important;}
+  ion-header ion-toolbar {
+    --background: var(--ion-color-primary, #121212) !important;
+    background: var(--ion-color-primary, #121212) !important;
+  }
   ion-header ion-toolbar .ios {padding-top: 30px;}
   .slide-content {
     display: flex;
@@ -132,10 +135,15 @@ const toRegister = () => {
   }
   .mySwiper {
     position:fixed;top: 0;bottom:0;left:0;right:0;
-    padding-bottom: 50px;;
+    padding-bottom: 50px;
+    background-color: var(--ion-color-primary, #121212);
   }
   .box{position:fixed; bottom: 0;right:15px;left:15px;}
   .logo {
     display: flex; justify-content: center; align-items: center;
   }
+  .content-bg {
+    /* background-color: var(--ion-color-primary, #121212); */
+    background-color: #121212 !important;
+  }  
 </style>
