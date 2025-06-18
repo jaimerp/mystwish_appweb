@@ -47,6 +47,7 @@ const done = () => {
   
   <style scoped>
 .container {
+  background-color: var(--ion-color-primary, #121212);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -112,7 +113,7 @@ const done = () => {
   .arrow {
     width: 120px;
     margin-top:-1px;
-    margin-left: -3%;
+    margin-left: -4%;
   }
   .icon-heart {
     font-size: 12rem; color: var(--ion-color-primary);

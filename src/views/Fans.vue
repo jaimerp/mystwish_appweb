@@ -385,6 +385,9 @@ ion-modal .ion-page { height: 55% !important; --height: 55hv;}
 .icon-heart {
   font-size: 12rem; color: var(--ion-color-primary-tint2)
 }
+.new-fan-container{
+  background-color: var(--ion-color-primary, #121212) !important;
+}
 
 @media (max-height: 700px) {
   .icon-heart {
