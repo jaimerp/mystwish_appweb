@@ -48,11 +48,10 @@ const done = () => {
   <style scoped>
   .box {
     background-color: var(--ion-color-primary-back);
+    padding-bottom: 80px;
     overflow-y: auto;
-    /* max-height: calc(100vh - 100px);  */
-    max-height: 80vh;
-    margin: 0 auto;
-    border-radius: 1.5rem;    
+    border-radius: 1.5rem;
+    width: 100%;
   }
 
   .box::-webkit-scrollbar {
@@ -62,12 +61,10 @@ const done = () => {
   .container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    /* height: 95vh; */
-    min-height: 100%;
+    height: 100%;
     padding: 20px;
   }
-  
+
   .logo {
     display: flex;
     justify-content: center;
@@ -105,20 +102,20 @@ const done = () => {
   }
   .arrow {
     width: 120px;
-    margin-top:-1px;
-    margin-left: -3%;
+    margin-top: -8px;
+    align-self: center;
   }
   .icon-heart {
     font-size: 12rem; color: var(--ion-color-primary);
   }
   .modal {
-      /* margin-bottom: 7%; */
-      margin-top: auto;
-      margin-bottom: auto;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    overflow: hidden;
   }
+
 
   @media (max-height: 700px) {
     .icon-heart {
