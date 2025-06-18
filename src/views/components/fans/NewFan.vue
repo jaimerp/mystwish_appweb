@@ -47,7 +47,6 @@ const done = () => {
   
   <style scoped>
 .container {
-  background-color: var(--ion-color-primary, #121212);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
