@@ -462,12 +462,12 @@ ion-alert::part(button) {
 }
 .info-text {
   font-size: 0.8rem;
-  color: var(--ion-color-primary-shade, #848484);
+  color: #848484;
   margin-top: 2px;
 }
 .info-text2 {
   font-size: 0.65rem;
-  color: var(--ion-color-primary-shade, #848484);
+  color: #848484;
   margin-top: 0px;
   text-align: right;
 }

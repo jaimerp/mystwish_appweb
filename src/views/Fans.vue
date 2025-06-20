@@ -326,7 +326,7 @@ ion-modal .ion-page { height: 55% !important; --height: 55hv;}
 }
 .info-text {
   font-size: 0.8rem;
-  color: var(--ion-color-primary-shade, #848484);
+  color: #848484;
   margin-top: 10px;
 }
 .unknown-text {
