@@ -39,7 +39,7 @@ const hideMatchModal = () => {
 
 <template>
   <div>
-    <ion-page class="ion-padding" v-if="!matchView && loading">
+    <ion-page class="ion-padding backcontainer" v-if="!matchView && loading">
       <ion-header>
         <ion-toolbar>
           <div class="ion-text-center logo">
@@ -54,8 +54,8 @@ const hideMatchModal = () => {
         </div>
       </div>
     </ion-page>
-    <ion-page v-if="!matchView && !loading">
-      <ion-content class="backcontainer">
+    <ion-page class="backcontainer" v-if="!matchView && !loading">
+      <ion-content>
         <ion-tabs>  
           <!-- :class="{ 'hide-tabs': tabsStore.hideTabs }" -->
           <ion-router-outlet></ion-router-outlet>
