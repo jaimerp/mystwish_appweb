@@ -23,6 +23,7 @@ const updating = ref(false);
 const confirmVisible = ref(false);
 const withHint = ref(false);
 const withMessage = ref(false);
+const isNative = window.Capacitor?.isNativePlatform?.() ?? false;
 
 const secretData = ref({
     name: '',
@@ -139,7 +140,7 @@ const confirmButtons = [
 <template>
   <ion-page class="ion-padding">
     <ion-header id="header">
-        <ion-toolbar>
+        <ion-toolbar :class="{'toolbar-native': isNative}">
           <div class="ion-text-center logo">
             <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 200px;">
           </div>
@@ -320,9 +321,12 @@ const confirmButtons = [
 
 <style scoped>
 ion-toolbar { --background: var(--ion-color-primary);}
-.ios ion-header ion-toolbar {padding-top: 30px !important;}
+/* .ios ion-header ion-toolbar {padding-top: 30px !important;} */
 .ios ion-footer ion-toolbar .ios {padding-bottom: 30px !important;}
 .ion-toolbar {display:flex;align-items: center;}
+.toolbar-native {
+  padding-top: env(safe-area-inset-top, 30px) !important;
+}
 .safe-modal {
   --offset-top: env(safe-area-inset-top);
   margin-top: var(--offset-top);

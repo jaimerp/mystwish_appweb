@@ -24,6 +24,7 @@ const newPrefix = ref();
 const sendingPhoneCode = ref(false);
 const checkingPhoneCode = ref(false);
 const phoneCodeValue = ref();
+const isNative = window.Capacitor?.isNativePlatform?.() ?? false;
 
 const itemToEdit = ref({type: '', title: '', field: '', valueText: '', valueText2: ''});
 
@@ -159,7 +160,7 @@ const modalBreakpoint = computed(() => {
 <template>
     <ion-page class="ion-padding">
         <ion-header>
-        <ion-toolbar>
+        <ion-toolbar :class="{'toolbar-native': isNative}">
           <div class="ion-text-center logo">
             <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 200px;">
           </div>
@@ -318,10 +319,12 @@ const modalBreakpoint = computed(() => {
 
 <style scoped>
 ion-toolbar { --background: var(--ion-color-primary);}
-.ios ion-header ion-toolbar {padding-top: 30px !important;}
+/* .ios ion-header ion-toolbar {padding-top: 30px !important;} */
 .ios ion-footer ion-toolbar .ios {padding-bottom: 30px !important;}
 .ion-toolbar {display:flex;align-items: center;}
-
+.toolbar-native {
+  padding-top: env(safe-area-inset-top, 30px) !important;
+}
 .modal-scrollable { overflow-y:auto; --overflow: auto;}
 ion-modal .ion-page { height: 70vh; height: 70%;}
 

@@ -12,6 +12,7 @@ const matchs = ref(dataStore.matchs);
 const matchsLoaded = ref(true);
 const matchToView = ref(null);
 const viewMatchModal = ref(false);
+const isNative = window.Capacitor?.isNativePlatform?.() ?? false;
 
 const matchData = ref({
     name: '',
@@ -39,7 +40,7 @@ onMounted(async () => {
 <template>
   <ion-page class="ion-padding">
     <ion-header>
-        <ion-toolbar>
+        <ion-toolbar :class="{'toolbar-native': isNative}">
           <div class="ion-text-center logo">
             <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 200px;">
           </div>
@@ -191,10 +192,13 @@ onMounted(async () => {
 
 <style scoped>
 ion-toolbar { --background: var(--ion-color-primary);}
-.ios ion-header ion-toolbar {padding-top: 30px !important;}
+/* .ios ion-header ion-toolbar {padding-top: 30px !important;} */
 .ios ion-footer ion-toolbar .ios {padding-bottom: 30px !important;}
 .ion-toolbar {display:flex;align-items: center;}
 
+.toolbar-native {
+  padding-top: env(safe-area-inset-top, 30px) !important;
+}
 
 .modal-scrollable { overflow-y: auto; --overflow: auto;}
 

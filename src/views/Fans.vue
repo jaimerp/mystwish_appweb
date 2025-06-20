@@ -20,6 +20,7 @@ const fansLoaded = ref(false);
 const newFanViewed = ref(false);
 const tabsStore = useTabsStore();
 const dataStore = useDataStore();
+const isNative = window.Capacitor?.isNativePlatform?.() ?? false;
 
 const fanData = ref({
     name: '',
@@ -67,7 +68,7 @@ const onModalDidPresent = () => {
 <template>
   <ion-page class="ion-padding" v-if="!newFanViewed">
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar :class="{'toolbar-native': isNative}">
         <div class="ion-text-center logo">
           <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 200px;">
         </div>
@@ -194,10 +195,12 @@ const onModalDidPresent = () => {
 
 <style scoped>
 ion-toolbar { --background: var(--ion-color-primary);}
-.ios ion-header ion-toolbar {padding-top: 30px !important;}
+/* .ios ion-header ion-toolbar {padding-top: 30px !important;} */
 .ios ion-footer ion-toolbar .ios {padding-bottom: 30px !important;}
 .ion-toolbar {display:flex;align-items: center;}
-
+.toolbar-native {
+  padding-top: env(safe-area-inset-top, 30px) !important;
+}
 .modal-scrollable { overflow-y: auto; --overflow: auto;}
 ion-modal .ion-page { height: 55% !important; --height: 55hv;}
 .page-scrollable { overflow-y:auto; --overflow: auto;}

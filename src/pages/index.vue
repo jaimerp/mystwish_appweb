@@ -11,6 +11,7 @@ const tabsStore = useTabsStore();
 const dataStore = useDataStore();
 const matchView = ref(false);
 const loading = ref(true);
+const isNative = window.Capacitor?.isNativePlatform?.() ?? false;
 
 onMounted(async() => {
   await dataStore.loadData()
@@ -42,7 +43,7 @@ const hideMatchModal = () => {
     <ion-page class="ion-padding backcontainer" v-if="!matchView && loading">
       <ion-header>
         <ion-toolbar>
-          <div class="ion-text-center logo">
+          <div class="ion-text-center logo" :class="{'logo-native': isNative}">
             <img :src="VUE_ASSETS_URL + 'logo.png'" :alt="APP_NAME" style="max-width: 200px;">
           </div>
         </ion-toolbar>
@@ -109,7 +110,9 @@ const hideMatchModal = () => {
   justify-content: center;
   align-items: start;
   height: 100%;
-  margin-top: 30px;
+}
+.logo-native{
+  margin-top: env(safe-area-inset-top, 30px);
 }
 .hide-tabs ion-tab-bar {
   display: none;
@@ -123,9 +126,9 @@ ion-tab-bar  {
     background: #121212 !important;
     width: 98% !important;
     border-radius: 20px;
-    margin: 5px 0px 5px 1% !important;
-    height: 65px;
-    max-height: 65px;
+    margin: 5px 0px 5px 0px !important;
+    height: 45px;
+    max-height: 45px;
     border: unset;
 }
 
