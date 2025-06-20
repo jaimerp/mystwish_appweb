@@ -47,6 +47,7 @@ const done = () => {
   
   <style scoped>
 .container {
+  background-color: #121212 !important;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -63,7 +64,7 @@ const done = () => {
 }
 
 .box {
-  background-color: var(--ion-color-primary-back);
+  background-color: var(--ion-color-primary-back, #eeeeed);
   overflow-y: auto;
   max-height: 80vh;
   margin: 0 auto;
@@ -128,4 +129,6 @@ const done = () => {
       font-size: 1.5rem;
     }
   }
+
+  
   </style>
