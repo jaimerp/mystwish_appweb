@@ -316,7 +316,7 @@ ion-toolbar { --background: var(--ion-color-primary);}
   width: 75%;
 }
 .no-match-wrapper ion-text {
-  color: var(--ion-color-text-white);
+  color: var(--ion-color-text-white, #FFFFFF);
 }
 .text-match-no-title {
   font-size: 2.2rem;
@@ -328,7 +328,7 @@ ion-toolbar { --background: var(--ion-color-primary);}
   font-weight: lighter;
 }
 .icon-heart {
-  font-size: 12rem; color: var(--ion-color-primary-tint2)
+  font-size: 12rem; color: var(--ion-color-primary-tint2, #2f3130);
 }
 
 @media (max-height: 700px) {

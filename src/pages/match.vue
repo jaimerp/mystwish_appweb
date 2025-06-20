@@ -33,9 +33,6 @@ const router = useRouter();
 
       <ion-button routerLink="/tabs" expand="block" style="margin: 30px 0;">Start Training</ion-button>
 
-
-
-
     </ion-content>
   </ion-page>
 </template>
