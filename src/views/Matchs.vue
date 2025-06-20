@@ -293,7 +293,7 @@ ion-toolbar { --background: var(--ion-color-primary);}
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--ion-color-primary-back2);
+  background-color: var(--ion-color-primary-back2, #8b8a8f);
   border-radius: 17px;
   flex: 0 0 calc(50% - 8px);
   max-width: calc(50% - 8px);

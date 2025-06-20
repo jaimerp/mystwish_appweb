@@ -220,7 +220,7 @@ ion-modal .ion-page { height: 55% !important; --height: 55hv;}
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--ion-color-primary-back);
+  background-color: var(--ion-color-primary-back, #eeeeed);
   border-radius: 17px;
   flex: 0 0 calc(50% - 8px) !important;
   max-width: calc(50% - 8px) !important;
@@ -304,7 +304,7 @@ ion-modal .ion-page { height: 55% !important; --height: 55hv;}
     justify-items: center;
     display: flex;
     flex-direction: column;
-    background-color: var(--ion-color-primary-back);
+    background-color: var(--ion-color-primary-back, #eeeeed);
 }
 .pointer {cursor:pointer;}
 .heart-container {
@@ -371,7 +371,7 @@ ion-modal .ion-page { height: 55% !important; --height: 55hv;}
   width: 75%;
 }
 .no-fans-wrapper ion-text {
-  color: var(--ion-color-text-white);
+  color: var(--ion-color-text-white, #FFFFFF);
 }
 .text-fans-no-title {
   font-size: 2.2rem;
@@ -383,7 +383,7 @@ ion-modal .ion-page { height: 55% !important; --height: 55hv;}
   font-weight: lighter;
 }
 .icon-heart {
-  font-size: 12rem; color: var(--ion-color-primary-tint2)
+  font-size: 12rem; color: var(--ion-color-primary-tint2, #2f3130)
 }
 .new-fan-container{
   background-color: #121212 !important;

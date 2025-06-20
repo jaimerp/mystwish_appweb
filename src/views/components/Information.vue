@@ -45,10 +45,10 @@ const hideInformation = () => {
 
 <style scoped>
 .information {
-  background-color: var(--ion-color-primary-back);
+  background-color: var(--ion-color-primary-back , #eeeeed);
   margin-top: 10px;
-  color: var(--ion-color-primary);
-  border: 1px solid var(--ion-color-primary);
+  color: var(--ion-color-primary, #121212);
+  border: 1px solid var(--ion-color-primary, #121212);
   border-radius: 10px; 
   padding: 10px;
   font-size: 0.8rem;
