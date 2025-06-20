@@ -55,7 +55,7 @@ const hideMatchModal = () => {
       </div>
     </ion-page>
     <ion-page v-if="!matchView && !loading">
-      <ion-content>
+      <ion-content class="backcontainer">
         <ion-tabs>  
           <!-- :class="{ 'hide-tabs': tabsStore.hideTabs }" -->
           <ion-router-outlet></ion-router-outlet>
@@ -176,5 +176,8 @@ ion-tab-button > ion-icon:after {
     justify-items: center;
     display: flex;
     flex-direction: column;
+}
+.backcontainer{
+  background-color: var(--ion-color-primary, #121212) !important;
 }
 </style>

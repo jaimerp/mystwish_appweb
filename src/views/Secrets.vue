@@ -363,7 +363,7 @@ ion-modal .ion-page { height: 100vh; height: 100%;}
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--ion-color-primary-back);
+  background-color: var(--ion-color-primary-back, #eeeeed);
   border-radius: 17px;
   flex: 0 0 calc(50% - 8px);
   max-width: calc(50% - 8px);
