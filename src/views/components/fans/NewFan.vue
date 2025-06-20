@@ -113,7 +113,7 @@ const done = () => {
   .arrow {
     width: 120px;
     margin-top:-1px;
-    margin-left: -4%;
+    margin-left: -2%;
   }
   .icon-heart {
     font-size: 12rem; color: var(--ion-color-primary);
